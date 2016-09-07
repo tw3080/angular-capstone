@@ -1,0 +1,23 @@
+{
+  "name": "angular-capstone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tw3080/angular-capstone.git"
+  },
+  "author": "Taylor Welling",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tw3080/angular-capstone/issues"
+  },
+  "homepage": "https://github.com/tw3080/angular-capstone#readme",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-route": "^1.5.8"
+  }
+}
