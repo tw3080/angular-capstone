@@ -30,8 +30,8 @@ angular.module('weatherLibrary', [])
             url: WUNDERGROUND_PREFIX + WUNDERGROUND_API_KEY + '/conditions/q/' + lat + ',' + lng + '.json'
         })
         .then(function(response) {
-            console.log(response.data.current_observation);
-            return response.data;
+            // console.log(response.data.current_observation);
+            return response.data.current_observation;
         });
     };
 }]);
