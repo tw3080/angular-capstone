@@ -14,8 +14,8 @@
             <h1>Weather App</h1>
         </header>
         <!-- Search bar -->
-        <form>
-            <input type="text" placeholder="Enter a location" />
+        <form name="locationSearchForm" novalidate ng-submit="submit()">
+            <input type="text" ng-model="address" placeholder="Enter a location" required />
             <input type="submit" value="Search" />
         </form>
         <!-- Navigation -->
