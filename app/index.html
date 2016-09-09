@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="weatherApp">
 
 <head>
     <meta charset="UTF-8">
@@ -18,11 +18,22 @@
             <input type="text" placeholder="Enter a location" />
             <input type="submit" value="Search" />
         </form>
+        <!-- Navigation -->
+        <nav>
+            <a ng-href="#/">Current</a> |
+            <a ng-href="#/3-day">3-day</a> |
+            <a ng-href="#/10-day">10-day</a>
+        </nav>
+        <div ng-view></div>
     </div>
     <script src="../node_modules/angular/angular.js"></script>
     <script src="../node_modules/angular-route/angular-route.js"></script>
     <script src="app.js"></script>
     <script src="views.js"></script>
+    <script src="components/library.js"></script>
+    <script src="home/home.js"></script>
+    <script src="3-day-forecast/3-day.js"></script>
+    <script src="10-day-forecast/10-day.js"></script>
 </body>
 
 </html>
