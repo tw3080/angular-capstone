@@ -15,7 +15,14 @@ viewsModule.controller('CurrentWeatherCtrl', function($scope, $rootScope, geocod
         geocodeLocation($scope.address).then(function(response) {
             $scope.lat = response.lat;
             $scope.lng = response.lng;
-            getWeatherConditions($scope.lat, $scope.lng);
+            // TODO: Is it OK to nest promises like this?
+            return getWeatherConditions($scope.lat, $scope.lng);
+        }).then(function(response) {
+            console.log(response);
+            // TODO: Might be a better way to do this?
+            $rootScope.locationName = response.display_location.city;
+            $rootScope.locationName += ', ';
+            $rootScope.locationName += response.display_location.state;
         });
     };
 });
