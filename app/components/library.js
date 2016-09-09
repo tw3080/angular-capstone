@@ -17,19 +17,20 @@ angular.module('weatherLibrary', [])
             params: params
         })
         .then(function(response) {
-            console.log(response.data.results[0].geometry.location);
+            // console.log(response.data.results[0].geometry.location);
+            return response.data.results[0].geometry.location;
         });
     };
 }])
 /* Accepts a location (latitude/longitude) as a parameter and returns the current weather conditions at that location */
 .factory('getWeatherConditions', ['$http', 'WUNDERGROUND_PREFIX', 'WUNDERGROUND_API_KEY', function($http, WUNDERGROUND_PREFIX, WUNDERGROUND_API_KEY) {
-    return function(city, state) {
+    return function(lat, lng) {
         return $http({
             method: 'GET',
-            url: WUNDERGROUND_PREFIX + WUNDERGROUND_API_KEY + '/conditions/q/37.776289,-122.395234' + '.json'
+            url: WUNDERGROUND_PREFIX + WUNDERGROUND_API_KEY + '/conditions/q/' + lat + ',' + lng + '.json'
         })
         .then(function(response) {
-            // console.log(response.data.current_observation);
+            console.log(response.data.current_observation);
             return response.data;
         });
     };
