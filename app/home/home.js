@@ -6,12 +6,16 @@ viewsModule.config(['$routeProvider', function($routeProvider) {
 }]);
 
 viewsModule.controller('CurrentWeatherCtrl', function($scope, $rootScope, geocodeLocation, getWeatherConditions) {
+    /*
     // TODO: Is this the best way to do this? Using $scope doesn't work...
     $rootScope.address = null;
+    */
 
-    $rootScope.submit = function() {
+    // $rootScope.submit = function(address) {
+    $scope.submit = function(address) {
         // TODO: Why are $scope and $rootScope interchangable here? (console log below)
-        // console.log($scope.address);
+        $scope.address = address;
+        console.log($scope.address);
         geocodeLocation($scope.address).then(function(response) {
             $scope.lat = response.lat;
             $scope.lng = response.lng;
@@ -19,10 +23,9 @@ viewsModule.controller('CurrentWeatherCtrl', function($scope, $rootScope, geocod
             return getWeatherConditions($scope.lat, $scope.lng);
         }).then(function(response) {
             console.log(response);
-            // TODO: Might be a better way to do this?
-            $rootScope.locationName = response.display_location.city;
-            $rootScope.locationName += ', ';
-            $rootScope.locationName += response.display_location.state;
+            $scope.locationName = response.display_location.city;
+            $scope.locationName += ', ';
+            $scope.locationName += response.display_location.state;
         });
     };
 });
