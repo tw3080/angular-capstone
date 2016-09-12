@@ -34,4 +34,41 @@ angular.module('weatherLibrary', [])
             return response.data.current_observation;
         });
     };
+}])
+.service('weatherAppService', ['geocodeLocation', 'getWeatherConditions', function(geocodeLocation, getWeatherConditions) {
+    var weatherAppService = this;
+
+    // Object containing information on a location's name
+    weatherAppService.location = {};
+    // Object containing information on a location's current weather conditions
+    weatherAppService.currentWeather = {};
+
+    // Geocodes the address input by the user, then gets the current weather conditions for that address
+    weatherAppService.submit = function(address, callback) {
+        // The address input by the user is bound to the weatherAppService.address variable
+        weatherAppService.address = address;
+        // Geocodes the address
+        geocodeLocation(weatherAppService.address).then(function(response) {
+            weatherAppService.lat = response.lat;
+            weatherAppService.lng = response.lng;
+            // Returns the current weather conditions based on the lat/lng address
+            return getWeatherConditions(weatherAppService.lat, weatherAppService.lng);
+        }).then(function(response) {
+            // TODO: Still confused about why this callback is necessary
+            callback(response);
+            console.log(response);
+            // Updates the value of the location's name
+            // TODO: Need to handle non-US areas
+            weatherAppService.location.name = response.display_location.city;
+            weatherAppService.location.name += ', ';
+            weatherAppService.location.name += response.display_location.state;
+
+            // Updates the values of the location's current weather conditions
+            // TODO: Might want to display more information
+            weatherAppService.currentWeather.lastObservation = response.observation_time;
+            weatherAppService.currentWeather.weather = response.weather;
+            weatherAppService.currentWeather.temperature = response.temperature_string;
+            weatherAppService.currentWeather.wind = response.wind_string;
+        });
+    };
 }]);
