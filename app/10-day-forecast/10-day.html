@@ -1,3 +1,14 @@
+
 <search-form submit="submit"></search-form>
 <ng-include src="'nav.html'"></ng-include>
-10 day forecast!!
+Ten Day Forecast<br />
+{{ location.name }}<br />
+<div ng-repeat="day in tenDay">
+    <p>
+        {{ day.date.weekday }}<br />
+        {{ day.date.day }} {{ day.date.monthname_short }}<br />
+        {{ day.conditions }}<br />
+        High: {{ day.high.fahrenheit }} F / {{ day.high.celsius }} C<br />
+        Low: {{ day.low.fahrenheit }} F / {{ day.low.celsius }} C<br />
+    </p>
+</div>
