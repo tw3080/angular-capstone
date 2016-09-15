@@ -18,6 +18,7 @@
   "homepage": "https://github.com/tw3080/angular-capstone#readme",
   "dependencies": {
     "angular": "^1.5.8",
+    "angular-local-storage": "^0.5.0",
     "angular-route": "^1.5.8"
   }
 }
