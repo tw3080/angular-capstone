@@ -11,6 +11,7 @@ angular.module('weatherLibrary', [])
             key: GOOGLE_API_KEY,
             address: location
         };
+
         return $http({
             method: 'GET',
             url: GOOGLE_GEOCODE_PREFIX,
@@ -23,7 +24,7 @@ angular.module('weatherLibrary', [])
         });
     };
 }])
-/* Accepts a location (latitude/longitude) as a parameter and returns the current weather conditions at that location */
+/* Accepts a location (latitude and longitude) as a parameter and returns the current, 3 day, and 10 day forecast for that location */
 .factory('getWeatherConditions', ['$http', 'WUNDERGROUND_PREFIX', 'WUNDERGROUND_API_KEY', function($http, WUNDERGROUND_PREFIX, WUNDERGROUND_API_KEY) {
     return function(lat, lng) {
         // Initialize variables for storing response data
@@ -33,6 +34,7 @@ angular.module('weatherLibrary', [])
         return $http({
             method: 'GET',
             url: WUNDERGROUND_PREFIX + WUNDERGROUND_API_KEY + '/conditions/q/' + lat + ',' + lng + '.json',
+            dataType: 'jsonp',
             cache: true
         })
         .then(function(response) {
@@ -41,28 +43,31 @@ angular.module('weatherLibrary', [])
             return $http({
                 method: 'GET',
                 url: WUNDERGROUND_PREFIX + WUNDERGROUND_API_KEY + '/forecast/q/' + lat + ',' + lng + '.json',
+                dataType: 'jsonp',
                 cache: true
             });
         })
         .then(function(response) {
-            // TODO: I get a console error here if I set threeDay to be anything except response.data.forecast, but everything works fine?
-            threeDay = response.data.forecast;
+            threeDay = response.data.forecast.simpleforecast.forecastday;
             // Gets a ten day forecast
             return $http({
                 method: 'GET',
                 url: WUNDERGROUND_PREFIX + WUNDERGROUND_API_KEY + '/forecast10day/q/' + lat + ',' + lng + '.json',
+                dataType: 'jsonp',
                 cache: true
             });
         })
         .then(function(response) {
-            // TODO
-            tenDay = response.data.forecast;
+            tenDay = response.data.forecast.simpleforecast.forecastday;
             return [current, threeDay, tenDay];
         });
     };
 }])
-.service('weatherAppService', ['geocodeLocation', 'getWeatherConditions', function(geocodeLocation, getWeatherConditions) {
+.service('weatherAppService', ['geocodeLocation', 'getWeatherConditions', 'localStorageService', function(geocodeLocation, getWeatherConditions, localStorageService) {
     var weatherAppService = this;
+
+    // Setting a local storage variable, for storing searched locations
+    weatherAppService.cache = localStorageService;
 
     weatherAppService.location = {}; // Data about a location's name
     weatherAppService.currentWeather = {}; // Data about current weather conditions
@@ -78,13 +83,28 @@ angular.module('weatherLibrary', [])
         weatherAppService.address = address;
         // Geocodes the address
         geocodeLocation(weatherAppService.address).then(function(response) {
-            // console.log(weatherAppService.forecast);
             weatherAppService.lat = response.lat;
             weatherAppService.lng = response.lng;
-            // Returns the current weather conditions based on the lat/lng address
-            return getWeatherConditions(weatherAppService.lat, weatherAppService.lng, weatherAppService.forecast);
+
+            // Checks whether or not the lat/lng values input by the user are in local storage
+            if ((weatherAppService.cache.get('lat') == response.lat) && (weatherAppService.cache.get('lng') == response.lng)) {
+                // If the values are already in local storage, get the stored data rather than make another HTTP request
+                var data = weatherAppService.cache.get('data');
+                return JSON.parse(data);
+            } else {
+                // Else, if the values aren't in local storage, set new lat/lng values
+                weatherAppService.cache.set('lat', response.lat);
+                weatherAppService.cache.set('lng', response.lng);
+            }
+
+            // Get the weather forecasts based on the lat/lng input by the user
+            var data = getWeatherConditions(weatherAppService.lat, weatherAppService.lng);
+            return data;
         }).then(function(response) {
             console.log(response);
+            // Store the response in local storage, to limit the number of HTTP requests
+            weatherAppService.cache.set('data', JSON.stringify(response));
+
             // Updates the value of the location's name
             // TODO: Need to handle non-US areas
             weatherAppService.location.name = response[0].display_location.city;
