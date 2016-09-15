@@ -4,38 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Weather App</title>
+    <link rel="stylesheet" href="components/rainy.css" />
+    <link rel="stylesheet" href="components/sunny.css" />
 </head>
 
 <body>
     <!-- Main wrapper container -->
-    <div class="main-container">
+    <div class="main-container" ng-class="weatherClass">
         <!-- Heading -->
         <header>
             <h1>Weather App</h1>
         </header>
-
-        <!-- Search bar -->
-        <!--
-        <search-form submit="submit"></search-form>
-    -->
-        <!--
-        <form name="locationSearchForm" novalidate ng-submit="submit()">
-            <input type="text" ng-model="address" placeholder="Enter a location" required />
-            <input type="submit" value="Search" />
-        </form>
-    -->
-        <!-- Navigation -->
-        <!--
-        <nav>
-            <a ng-href="#/">Current</a> |
-            <a ng-href="#/3-day">3-day</a> |
-            <a ng-href="#/10-day">10-day</a>
-        </nav>
-    -->
+        <!-- Views -->
         <div ng-view></div>
     </div>
     <script src="../node_modules/angular/angular.js"></script>
     <script src="../node_modules/angular-route/angular-route.js"></script>
+    <script src="../node_modules/angular-local-storage/dist/angular-local-storage.js"></script>
     <script src="app.js"></script>
     <script src="views.js"></script>
     <script src="search-form.js"></script>
