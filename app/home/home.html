@@ -1,10 +1,12 @@
 <search-form submit="submit"></search-form>
 <ng-include src="'nav.html'"></ng-include>
-<p>
-    Current Forecast<br />
-    {{ location.name }}<br />
-    {{ currentWeather.lastObservation }}<br />
-    {{ currentWeather.weather }}<br />
-    {{ currentWeather.temperature }}<br />
-    {{ currentWeather.wind }}
-</p>
+<div>
+    <p>
+        Current Forecast<br />
+        {{ location.name }}<br />
+        {{ currentWeather.data.observation_time }}<br />
+        {{ currentWeather.data.weather }}<br />
+        {{ currentWeather.data.temperature_string }}<br />
+        {{ currentWeather.data.wind_string }}
+    </p>
+</div>
