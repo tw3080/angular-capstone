@@ -7,6 +7,8 @@ Ten Day Forecast<br />
     <p>
         {{ day.date.weekday }}<br />
         {{ day.date.day }} {{ day.date.monthname_short }}<br />
+        <i class="wi wi-wu-{{day.icon}}" style="font-size:100px;height:120px"></i>
+        <br />
         {{ day.conditions }}<br />
         High: {{ day.high.fahrenheit }} F / {{ day.high.celsius }} C<br />
         Low: {{ day.low.fahrenheit }} F / {{ day.low.celsius }} C<br />
