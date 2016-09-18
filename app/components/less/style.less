@@ -1,1 +1,62 @@
-/* lol lol */
+@btn-base-color: #fff;
+@btn-border: 1px solid black;
+@btn-border-radius: 3px;
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+}
+
+.main-container {
+    // TODO: Vertically center
+    border: 1px solid #dedede;
+    margin: 0 auto;
+    width: 90%;
+}
+
+.search-text-input,
+.search-btn,
+.forecast-btn {
+    padding: 0.5rem;
+}
+
+.search-text-input {
+    border: @btn-border;
+    border-radius: @btn-border-radius;
+    box-sizing: border-box;
+    width: 79%;
+}
+
+.search-btn {
+    background-color: @btn-base-color;
+    border: @btn-border;
+    border-radius: @btn-border-radius;
+    float: right;
+    width: 19%;
+}
+
+.forecast-nav {
+    margin-top: 2%;
+}
+
+.forecast-btn {
+    background-color: @btn-base-color;
+    border: @btn-border;
+    border-radius: @btn-border-radius;
+    width: 49%;
+}
+
+.ten-day-btn {
+    float: right;
+}
+
+.current-weather-container {
+    text-align: center;
+}
+
+.current-weather-icon {
+    font-size: 8rem;
+    height: 9.5rem;
+}
+
+/* Responsiveness */
