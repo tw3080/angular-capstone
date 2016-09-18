@@ -1,13 +1,13 @@
 <search-form submit="submit"></search-form>
 <ng-include src="'nav.html'"></ng-include>
-<div>
+<!-- Add ng-if or ng-show so that degrees don't display automatically?? -->
+<div class="current-weather-container">
     <p>
-        Current Forecast<br />
-        <i class="wi wi-wu-{{currentWeather.data.icon}}" style="font-size:100px"></i><br />
-        {{ location.name }}<br />
-        {{ currentWeather.data.observation_time }}<br />
-        {{ currentWeather.data.weather }}<br />
-        {{ currentWeather.data.temperature_string }}<br />
-        {{ currentWeather.data.wind_string }}
+        <h1>{{ location.name }}</h1>
+        <i class="wi wi-wu-{{currentWeather.data.icon}} current-weather-icon"></i><br />
+        <div class="current-weather-description">
+            {{ currentWeather.data.weather }}<br />
+            {{ currentWeather.data.temp_f }} &deg;F / {{ currentWeather.data.temp_c }} &deg;C<br />
+        </div>
     </p>
 </div>
