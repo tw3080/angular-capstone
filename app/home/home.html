@@ -1,13 +1,10 @@
-<search-form submit="submit"></search-form>
-<ng-include src="'nav.html'"></ng-include>
-<!-- Add ng-if or ng-show so that degrees don't display automatically?? -->
-<div class="current-weather-container">
-    <p>
-        <h1>{{ location.name }}</h1>
-        <i class="wi wi-wu-{{currentWeather.data.icon}} current-weather-icon"></i><br />
-        <div class="current-weather-description">
-            {{ currentWeather.data.weather }}<br />
-            {{ currentWeather.data.temp_f }} &deg;F / {{ currentWeather.data.temp_c }} &deg;C<br />
-        </div>
-    </p>
+<ng-include src="'nav2.html'"></ng-include>
+<div class="weather-container current-weather-container">
+    <!-- TODO: This h1 is messing up the top margin of the entire page??? -->
+    <h1>{{ location.name }}</h1>
+    <i class="wi wi-wu-{{currentWeather.data.icon}} current-weather-icon"></i><br />
+    <div class="current-weather-description">
+        <span class="unimportant-text">{{ currentWeather.data.weather }}<br /></span>
+        <h1>{{ currentWeather.data.temp_f }}&deg;</h1>
+    </div>
 </div>
