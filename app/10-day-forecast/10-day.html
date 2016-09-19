@@ -1,16 +1,17 @@
 
 <search-form submit="submit"></search-form>
 <ng-include src="'nav.html'"></ng-include>
-Ten Day Forecast<br />
 {{ location.name }}<br />
-<div ng-repeat="day in tenDay">
-    <p>
-        {{ day.date.weekday }}<br />
-        {{ day.date.day }} {{ day.date.monthname_short }}<br />
-        <i class="wi wi-wu-{{day.icon}}" style="font-size:100px;height:120px"></i>
-        <br />
-        {{ day.conditions }}<br />
-        High: {{ day.high.fahrenheit }} F / {{ day.high.celsius }} C<br />
-        Low: {{ day.low.fahrenheit }} F / {{ day.low.celsius }} C<br />
-    </p>
+<div class="forecast-row clearfix" ng-repeat="day in tenDay">
+    <div class="col-1-3">
+        {{ day.date.weekday_short }}<br />
+        <span class="unimportant-text">{{ day.date.day }} {{ day.date.monthname_short }}</span>
+    </div>
+    <div class="col-1-3 icon-column">
+        <i class="wi wi-wu-{{day.icon}} ten-day-icon"></i>
+    </div>
+    <div class="col-1-3">
+        {{ day.high.fahrenheit }}&deg;<br />
+        <span class="unimportant-text">{{ day.low.fahrenheit }}&deg;</span>
+    </div>
 </div>
