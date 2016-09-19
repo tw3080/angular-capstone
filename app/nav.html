@@ -1,4 +1,13 @@
-<nav class="forecast-nav">
-    <a href="#/"><button class="forecast-btn">Current</button></a>
-    <a href="#/10-day"><button class="forecast-btn ten-day-btn">Ten Day</button></a>
+<ul>
+    <li class="current-weather-link"><a href="#/">Now</a></li>
+    <li class="ten-day-link"><a href="#/10-day">10 Day</a></li>
+    <li class="audio-button"><i class="fa fa-volume-up audio-control" aria-hidden="true"></i></li>
+    <li class="lol"><search-form submit="submit"></search-form></li>
+</ul>
+<audio-control ng-if="audioFile" audio-file="audioFile"></audio-control>
+<!--
+<nav>
+    <a href="#/"><button class="forecast-btn current-weather-btn">Now</button></a>
+    <a href="#/10-day"><button class="forecast-btn ten-day-btn">10 Day</button></a>
 </nav>
+-->
