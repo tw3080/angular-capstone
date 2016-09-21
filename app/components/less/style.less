@@ -1,139 +1,45 @@
-@btn-base-color: #fff;
-@btn-border: 1px solid black;
-@btn-border-radius: 3px;
-
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
+    text-transform: uppercase;
 }
 
+/* CONTAINERS/STRUCTURE */
+
+/* Wrapper for all content in body */
 .main-container {
     // TODO: Vertically center
-    // border: 1px solid #dedede;
     margin: 0 auto;
     width: 100%;
 }
 
-.search-text-input,
-.search-btn {
-    padding: 0.61rem;
-}
-
-/*
-.search-text-input {
-    // border: @btn-border;
-    border: 0;
-    // border-bottom: 1px solid black;
-    box-sizing: border-box;
-    float: left;
-    width: 47%;
-}
-*/
-
-.search-text-input {
-    // border: @btn-border;
-    border: 0;
-    // border-bottom: 1px solid black;
-    box-sizing: border-box;
-    float: left;
-    width: 82%;
-    text-transform: uppercase;
-}
-
-.search-btn {
-    // border: @btn-border;
-    background-color: #333;
-    border: 0;
-    color: #fff;
-    float: left;
-    width: 18%;
-    // width: 19%;
-}
-/*
-.search-btn {
-    // border: @btn-border;
-    background-color: #dedede;
-    border: 0;
-    float: left;
-    width: 10%;
-    // width: 19%;
-}
-*/
-
-.forecast-btn {
-    // border: @btn-border;
-    background-color: #dedede;
-    border: 0;
-    float: left;
-    // width: 49%;
-}
-
-.volume-btn {
-    width: 10%;
-}
-
-.current-weather-btn {
-    width: 14%;
-}
-
-.ten-day-btn {
-    width: 19%;
-}
-
-.current-weather-container {
+/* For current weather and 10 day forecast */
+.weather-container {
+    margin-top: 2.2rem;
     text-align: center;
-}
-
-.current-weather-icon {
-    font-size: 8rem;
-    height: 9.5rem;
-}
-
-/**** 10-DAY STUFF ****/
-
-.forecast-row {
-    // border: 1px solid black;
-    width: 100%;
-}
-
-// TODO: not sure if all this is necessary
-.clearfix:after {
-    content: "";
-    // visibility: hidden;
-    display: block;
-    // height: 0;
-    clear: both;
 }
 
 /* 1/3 width column; used for layout of 10-day forecast */
 .col-1-3 {
-    // border: 1px solid pink;
     float: left;
     padding: 0.85rem 0;
     text-align: center;
-    text-transform: uppercase;
     width: 33%;
 }
 
-.ten-day-icon {
-    font-size: 2em;
+/* Clear floated columns (.col-1-3) */
+.clearfix:after {
+    content: '';
+    display: block;
+    clear: both;
 }
 
+/* Vertically centers weather icons in 10 day forecast */
 .icon-column {
     padding: 1rem 0;
 }
 
-.unimportant-text {
-    color: #A3A3A3;
-}
-
-.weather-container {
-    margin-top: 2.2rem;
-}
-
-/****************************/
-/* NAVBAR */
-/****************************/
+/* SEARCH/AUDIO CONTROL BAR */
 
 ul {
     list-style-type: none;
@@ -160,31 +66,69 @@ li a {
     text-align: center;
     padding: 0.5rem;
     text-decoration: none;
-    text-transform: uppercase;
 }
 
 li a:hover {
     background-color: #111;
 }
 
-.audio-control {
-    padding: 0.6rem;
+/* Search text input and search button */
+.search-bar {
+    width: 89%;
 }
 
-.lol {
-    width: 52%;
+.search-text-input,
+.search-btn {
+    padding: 0.61rem;
 }
 
-.current-weather-link {
-    width: 15%;
+/* Search text input */
+.search-text-input {
+    border: 0;
+    box-sizing: border-box;
+    float: left;
+    text-transform: uppercase;
+    width: 89%;
 }
 
-.ten-day-link {
-    width: 22%;
-}
-
-.audio-button {
+/* Search button */
+.search-btn {
+    background-color: #333;
+    border: 0;
+    color: #fff;
+    float: left;
     width: 11%;
 }
 
-/* Responsiveness */
+/* Spacing/sizing of audio icon's parent li element */
+.audio-btn {
+    width: 11%;
+}
+
+/* Audio icon itself */
+.audio-icon {
+    padding: 0.6rem;
+}
+
+/* TYPOGRAPHY */
+
+/* City name heading */
+.city-name-heading {
+    padding-top: 2rem;
+}
+
+/* Big weather icon for current weather */
+.current-weather-icon {
+    font-size: 8rem;
+    height: 9.5rem;
+}
+
+/* Smaller weather icons for 10 day forecast */
+.ten-day-icon {
+    font-size: 2em;
+}
+
+/* Weather conditions, dates, and daily low temperature text */
+.unimportant-text {
+    color: #A3A3A3;
+}
