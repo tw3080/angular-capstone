@@ -1,0 +1,11 @@
+/* SUNNY WEATHER STYLES */
+
+/* Main container background */
+.sun .main-container {
+  background-color: #FFC94B;
+}
+
+/* Odd-numbered forecasts in 10 day forecast */
+.sun .odd-forecast {
+  background-color: #ffc131;
+}
