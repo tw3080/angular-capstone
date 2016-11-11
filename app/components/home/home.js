@@ -16,21 +16,25 @@ viewsModule.controller('CurrentWeatherCtrl', function($scope, $rootScope, weathe
     // Audio/css
     $scope.audioFile = weatherAppService.weatherSounds;
     $rootScope.weatherClass = weatherAppService.weatherClass;
+    $scope.weatherCallback = function(location) {
+        $scope.showWeather = weatherAppService.showWeather; // Show the weather conditions
+        // Location
+        $scope.address = location; // Set the current location to the searched address
+        $scope.location = weatherAppService.location;
+        // Weather forecasts
+        $scope.currentWeather = weatherAppService.currentWeather;
+        $scope.tenDay = weatherAppService.tenDay.data;
+        // Audio/css
+        $scope.audioFile = weatherAppService.weatherSounds;
+        $rootScope.weatherClass = weatherAppService.weatherClass;
+        console.log('Before submit: ' + $rootScope.weatherClass);
+    };
+
+    weatherAppService.initializeGeolocation($scope.weatherCallback);
 
     /* Uses the submit function from weatherAppService to geocode the address input by the user and gets the current weather/10-day forecast */
     $scope.submit = function(address) {
-        weatherAppService.submit(address, function(location) {
-            $scope.showWeather = weatherAppService.showWeather; // Show the weather conditions
-            // Location
-            $scope.address = location; // Set the current location to the searched address
-            $scope.location = weatherAppService.location;
-            // Weather forecasts
-            $scope.currentWeather = weatherAppService.currentWeather;
-            $scope.tenDay = weatherAppService.tenDay.data;
-            // Audio/css
-            $scope.audioFile = weatherAppService.weatherSounds;
-            $rootScope.weatherClass = weatherAppService.weatherClass;
-            console.log($rootScope.weatherClass);
-        });
+        weatherAppService.submit(address, $scope.weatherCallback);
+        console.log('After submit: ' + $rootScope.weatherClass);
     };
 });
