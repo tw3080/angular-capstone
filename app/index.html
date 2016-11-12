@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="weatherApp">
+<html lang="en" ng-app="weatherApp" ng-class="weatherClass">
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- For responsiveness -->
     <meta charset="UTF-8">
     <title>Weather App</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet" href="assets/css/rain.css" />
-    <link rel="stylesheet" href="assets/css/snow.css" />
-    <link rel="stylesheet" href="assets/css/sun.css" />
-    <link rel="stylesheet" href="assets/css/thunder.css" />
+    <link rel="stylesheet" href="../build/assets/css/style.css" />
+    <link rel="stylesheet" href="../build/assets/css/rain.css" />
+    <link rel="stylesheet" href="../build/assets/css/snow.css" />
+    <link rel="stylesheet" href="../build/assets/css/sun.css" />
+    <link rel="stylesheet" href="../build/assets/css/thunder.css" />
     <link rel="stylesheet" href="assets/css/weather-icons.min.css" />
     <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.min.css" />
 </head>
 
-<body ng-class="weatherClass">
+<body>
     <!-- Main wrapper container -->
     <div class="main-container">
         <!-- Views -->
@@ -27,7 +27,9 @@
     <script src="app.js"></script>
     <script src="views.js"></script>
     <script src="search-form.js"></script>
+    <!--
     <script src="audio-control.js"></script>
+-->
     <script src="components/library.js"></script>
     <script src="components/home/home.js"></script>
 </body>
