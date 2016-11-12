@@ -76,31 +76,26 @@ angular.module('weatherLibrary', [])
             weatherAppService.weatherSounds = 'sunnysounds';
             console.log('Weather sounds: ' + weatherAppService.weatherSounds);
             weatherAppService.weatherClass = 'sun';
-            console.log('Weather class: ' + weatherAppService.weatherClass);
         } else if (['cloudy', 'hazy', 'mostlycloudy', 'sleat'].indexOf(weatherAppService.currentWeather.data.icon) > -1) {
             console.log('Weather icon: ' + weatherAppService.currentWeather.data.icon);
             weatherAppService.weatherSounds = 'cloudysounds';
             console.log('Weather sounds: ' + weatherAppService.weatherSounds);
             weatherAppService.weatherClass = 'thunder';
-            console.log('Weather class: ' + weatherAppService.weatherClass);
         } else if (['chancerain', 'chancesleat', 'rain', 'sleat'].indexOf(weatherAppService.currentWeather.data.icon) > -1) {
             console.log('Weather icon: ' + weatherAppService.currentWeather.data.icon);
             weatherAppService.weatherSounds = 'rainsounds';
             console.log('Weather sounds: ' + weatherAppService.weatherSounds);
             weatherAppService.weatherClass = 'rain';
-            console.log('Weather class: ' + weatherAppService.weatherClass);
         } else if (['chancetstorms', 'tstorms'].indexOf(weatherAppService.currentWeather.data.icon) > -1) {
             console.log('Weather icon: ' + weatherAppService.currentWeather.data.icon);
             weatherAppService.weatherSounds = 'thundersounds';
             console.log('Weather sounds: ' + weatherAppService.weatherSounds);
             weatherAppService.weatherClass = 'thunder';
-            console.log('Weather class: ' + weatherAppService.weatherClass);
         } else if (['chanceflurries', 'chancesnow', 'flurries', 'snow'].indexOf(weatherAppService.currentWeather.data.icon) > -1) {
             console.log('Weather icon: ' + weatherAppService.currentWeather.data.icon);
             weatherAppService.weatherSounds = 'snowsounds';
             console.log('Weather sounds: ' + weatherAppService.weatherSounds);
             weatherAppService.weatherClass = 'snow';
-            console.log('Weather class: ' + weatherAppService.weatherClass);
         }
     };
 

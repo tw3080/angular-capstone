@@ -27,7 +27,7 @@ viewsModule.controller('CurrentWeatherCtrl', function($scope, $rootScope, weathe
         // Audio/css
         $scope.audioFile = weatherAppService.weatherSounds;
         $rootScope.weatherClass = weatherAppService.weatherClass;
-        console.log('Before submit: ' + $rootScope.weatherClass);
+        console.log('weatherClass before submit: ' + $rootScope.weatherClass);
     };
 
     weatherAppService.initializeGeolocation($scope.weatherCallback);
@@ -35,6 +35,6 @@ viewsModule.controller('CurrentWeatherCtrl', function($scope, $rootScope, weathe
     /* Uses the submit function from weatherAppService to geocode the address input by the user and gets the current weather/10-day forecast */
     $scope.submit = function(address) {
         weatherAppService.submit(address, $scope.weatherCallback);
-        console.log('After submit: ' + $rootScope.weatherClass);
+        console.log('weatherClass after submit: ' + $rootScope.weatherClass);
     };
 });
