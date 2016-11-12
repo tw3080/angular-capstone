@@ -6,7 +6,6 @@ weatherApp.directive('searchForm', function() {
             submit: '=submit'
         },
         link: function(scope, element, attrs) {
-            // console.log(scope.submit);
             scope.address = null;
         }
     };
