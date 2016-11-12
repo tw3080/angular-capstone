@@ -1,0 +1,13 @@
+.snow body {
+  background-color: #fff;
+}
+.snow .main-container {
+  background-color: #fff;
+}
+.snow .odd-forecast {
+  background-color: #F5F5F5;
+}
+.snow .unimportant-text {
+  color: #A6D0DD;
+}
+/*# sourceMappingURL=snow.css.map */
