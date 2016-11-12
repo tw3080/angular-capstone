@@ -16,9 +16,10 @@ body {
 }
 
 /* For current weather and 10 day forecast */
-.weather-container {
+.current-weather-container,
+.ten-day-container {
     font-size: 1.25rem;
-    margin-top: 2.2rem;
+    margin-top: 2.35rem;
     text-align: center;
 }
 
@@ -123,12 +124,13 @@ li a:hover {
 
 /* City name heading */
 .city-name-heading {
-    padding-top: 2rem;
+    // padding-top: 2rem;
 }
 
 /* Big weather icon for current weather */
 .current-weather-icon {
     font-size: 8rem;
+    padding-top: 4rem;
     height: 9.5rem;
 }
 
@@ -146,7 +148,15 @@ li a:hover {
 
 /* Desktop */
 @media only screen and (min-width: 768px) {
-    body {
-        text-transform: lowercase;
+    /* For current weather only */
+    .current-weather-container {
+        float: left;
+        width: 50%;
+    }
+
+    /* For 10 day forecast only */
+    .ten-day-container {
+        float: right;
+        width: 50%;
     }
 }
