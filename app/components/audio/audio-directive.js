@@ -1,7 +1,7 @@
 weatherApp.directive('audioControl', function() {
     return {
         restrict: 'E',
-        templateUrl: 'audio-control.html',
+        templateUrl: './components/audio/audio.html',
         scope: {
             audioFile: '=audioFile'
         },
@@ -9,14 +9,16 @@ weatherApp.directive('audioControl', function() {
             scope.$watch(function() { return scope.audioFile; }, function() {
                 scope.audioOgg = 'assets/audio/' + scope.audioFile + '.ogg';
                 scope.audioMp3 = 'assets/audio/' + scope.audioFile + '.mp3';
-                // TODO: The line below seems unnecessary?
-                // document.getElementById('weather-audio').load().play();
+                // TODO: Get an error here if no location is set because of the ng-if in audio-control
+                document.getElementById('weather-audio').load();
+                document.getElementById('weather-audio').play();
             });
             scope.audioOgg = 'assets/audio/' + scope.audioFile + '.ogg';
             scope.audioMp3 = 'assets/audio/' + scope.audioFile + '.mp3';
 
             scope.paused = false;
 
+            /* Play/pause audio when audio icon is clicked */
             scope.toggleAudio = function() {
                 var audio = document.getElementById('weather-audio');
                 var audioIcon = document.getElementById('audio-icon');
