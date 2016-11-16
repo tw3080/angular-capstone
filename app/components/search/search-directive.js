@@ -1,7 +1,7 @@
 weatherApp.directive('searchForm', function() {
     return {
         restrict: 'E',
-        templateUrl: 'search-form.html',
+        templateUrl: './components/search/search.html',
         scope: {
             submit: '=submit'
         },

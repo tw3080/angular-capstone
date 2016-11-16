@@ -1,4 +1,5 @@
-<i class="fa audio-icon" aria-hidden="true" ng-class="paused ? 'fa-volume-off' : 'fa-volume-up'" ng-click="toggleAudio()"></i>
+<i class="fa nav-icon" aria-hidden="true" ng-class="paused ? 'fa-volume-off' : 'fa-volume-up'" ng-click="toggleAudio()"></i>
+<!-- TODO: Add 'autoplay' here again after testing (before 'loop')-->
 <audio id="weather-audio" ng-if="audioFile" autoplay loop>
     <source ng-src="{{ audioOgg }}" type="audio/mpeg"/>
     <source ng-src="{{ audioMp3 }}" type="audio/mpeg"/>
