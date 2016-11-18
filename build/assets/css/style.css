@@ -1,15 +1,23 @@
+html {
+  height: 100%;
+}
 body {
   color: #333;
   font-family: 'Roboto', sans-serif;
   font-weight: bold;
-  margin: 0;
+  margin: 0 auto;
   text-transform: uppercase;
 }
 /* CONTAINERS/STRUCTURE */
 /* Wrapper for all content in body */
 .main-container {
-  margin: 0 auto;
+  margin: 3rem auto 0 auto;
   width: 100%;
+}
+/* Wrapper for centering and giving a max-width to navigation */
+.nav-container {
+  margin: 0 auto;
+  max-width: 60rem;
 }
 /* For current weather and 10 day forecast */
 .current-weather-container,
@@ -36,46 +44,116 @@ body {
   padding: 1rem 0;
 }
 /* SEARCH/AUDIO CONTROL BAR */
-ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  position: fixed;
-  overflow: hidden;
+.nav {
   background-color: #333;
+  left: 0;
+  position: fixed;
   top: 0;
   width: 100%;
+  z-index: 9999;
 }
-li {
+.nav-list {
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+.nav-item {
   float: left;
   display: block;
-  color: white;
+  color: #fff;
   text-align: center;
-  text-decoration: none;
 }
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 0.5rem;
-  text-decoration: none;
+.nav-btn {
+  float: right;
+  width: 50%;
+  -webkit-transition: 0.25s ease-in-out all;
+  -moz-transition: 0.25s ease-in-out all;
+  -o-transition: 0.25s ease-in-out all;
+  transition: 0.25s ease-in-out all;
 }
-li a:hover {
-  background-color: #111;
+.nav-btn:hover {
+  cursor: pointer;
+  background-color: #BDBDBD;
 }
-/* Search text input and search button */
+.seventy,
+.thirty {
+  float: left;
+}
+.seventy {
+  width: 70%;
+}
+.thirty {
+  width: 30%;
+}
 .search-bar {
-  width: 88%;
+  width: 100%;
 }
+/*
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    overflow: hidden;
+    background-color: #333;
+    top: 0;
+    width: 100%;
+}
+*/
+/*
+li {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+}
+*/
+/*
+THESE MIGHT BE USEFUL IF OTHER LINKS ARE ADDED TO THE NAV
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 0.5rem;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+*/
+/* Search text input and search button */
+/*
+.search-bar {
+    width: 88%;
+}
+*/
 /* Search text input */
+/*
+.search-text-input {
+    border: 0;
+    box-sizing: border-box;
+    // float: left;
+    font-size: 1rem;
+    padding: 0.61rem;
+    text-transform: uppercase;
+    width: 87%;
+    &:focus {
+        outline: 1px solid #333;
+        outline-offset: -1px;
+    }
+}
+*/
 .search-text-input {
   border: 0;
   box-sizing: border-box;
-  float: left;
   font-size: 1rem;
-  padding: 0.61rem;
+  padding: 0.95rem 1rem 0.95rem 2.8rem;
   text-transform: uppercase;
-  width: 87%;
+  width: 100%;
 }
 .search-text-input:focus {
   outline: 1px solid #333;
@@ -95,12 +173,54 @@ li a:hover {
   outline-offset: -1px;
 }
 /* Spacing/sizing of audio icon's parent li element */
-.audio-btn {
-  width: 12%;
+.nav-icon {
+  padding: 1rem;
 }
 /* Audio icon itself */
+/*
 .audio-icon {
-  padding: 0.7rem;
+    // padding: 0.7rem;
+    padding: 1rem;
+}
+*/
+.search-container {
+  width: 100%;
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+}
+.search-icon {
+  color: #BDBDBD;
+  position: absolute;
+  margin-left: 1rem;
+  top: 30%;
+}
+.error-msg {
+  position: absolute;
+  top: 120%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  /*
+    left: 10px;
+    right: 10px;
+    */
+}
+/*
+@keyframes blink {
+    50% { opacity: 0; }
+}
+*/
+.error-msg.ng-hide-add,
+.error-msg.ng-hide-remove {
+  -webkit-transition: 0.25s ease-in-out all;
+  -moz-transition: 0.25s ease-in-out all;
+  -o-transition: 0.25s ease-in-out all;
+  transition: 0.25s ease-in-out all;
+  opacity: 1;
+}
+.error-msg.ng-hide {
+  opacity: 0;
 }
 /* TYPOGRAPHY */
 /* City name heading */
@@ -121,15 +241,72 @@ li a:hover {
 /* RESPONSIVENESS */
 /* Desktop */
 @media only screen and (min-width: 768px) {
-  /* For current weather only */
   .current-weather-container {
+    height: 50.5rem;
+    width: 64rem;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+  .ten-day-container {
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+  }
+  .top-left {
     float: left;
     width: 50%;
   }
-  /* For 10 day forecast only */
-  .ten-day-container {
+  .top-right {
     float: right;
+    font-size: 3rem;
     width: 50%;
+  }
+  .current-weather-icon {
+    font-size: 21.5rem;
+  }
+  .lol {
+    float: left;
+    width: 10%;
+  }
+  .col-1-3 {
+    float: none;
+    width: 100%;
+  }
+  /* For clearing the .top-left and .top-left floats */
+  /*
+    .clearfix:after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+    */
+  /* For current weather only */
+  /*
+    .current-weather-container {
+        float: left;
+        width: 50%;
+    }
+    */
+  /* For 10 day forecast only */
+  /*
+    .ten-day-container {
+        float: right;
+        width: 50%;
+    }
+    */
+}
+@media only screen and (min-width: 1200px) {
+  /* For current weather and 10 day forecast */
+  .current-weather-container,
+  .ten-day-container {
+    font-size: 2rem;
+  }
+  .current-weather-container {
+    height: 39rem;
   }
 }
 /*# sourceMappingURL=style.css.map */
