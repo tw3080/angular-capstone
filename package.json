@@ -1,20 +1,23 @@
-git st{
+{
   "name": "angular-capstone",
   "version": "1.0.0",
   "description": "",
-  "main": "app/",
+  "main": "app/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "mkdir": "mkdir build",
-    "build": "npm run clean && npm run mkdir && npm run build:html && npm run build:css",
-    "watch": " concurrently --kill-others \"npm run watch:html\" \"npm run watch:css\"",
+    "build": "npm run clean && npm run mkdir && npm run build:html && npm run build:css && npm run build:js",
+    "watch": " concurrently --kill-others \"npm run watch:html\" \"npm run watch:css\" \"npm run watch:js\"",
     "clean": "rm -rf build",
     "build:html": "npm run clean:html && cp app/*.html build/ && cp -r app/components build/",
     "watch:html": "npm run build:html && chokidar ./app/**/*.html -c \"npm run build:html\"",
     "clean:html": "rm -f build/index.html",
     "build:css": "npm run clean:css && lessc --source-map ./app/assets/less/style.less build/assets/css/style.css",
     "watch:css": "npm run build:css && chokidar ./app/assets/less/style.less -c \"npm run build:css\"",
-    "clean:css": "rm -f build/assets/css/style.css build/assets/css/style.css.map"
+    "clean:css": "rm -f build/assets/css/style.css build/assets/css/style.css.map",
+    "build:js": "npm run clean:js && webpack",
+    "watch:js": "npm run build:js && webpack --watch",
+    "clean:js": "rm -f build/weather-mood.js build/weather-mood.js.map"
   },
   "repository": {
     "type": "git",
@@ -30,14 +33,14 @@ git st{
     "angular": "^1.5.8",
     "angular-animate": "^1.5.8",
     "angular-local-storage": "^0.5.0",
-    "angular-route": "^1.5.8",
-    "font-awesome": "^4.6.3"
+    "angular-route": "^1.5.8"
   },
   "devDependencies": {
     "chokidar-cli": "^1.2.0",
     "gulp": "^3.9.1",
     "gulp-less": "^3.1.0",
     "gulp-watch": "^4.3.9",
-    "less": "^2.7.1"
+    "less": "^2.7.1",
+    "webpack": "^1.13.3"
   }
 }
