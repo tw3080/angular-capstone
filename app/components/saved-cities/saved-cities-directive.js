@@ -1,4 +1,6 @@
-weatherApp.directive('savedCities', function() {
+var viewsModule = require('../../views');
+
+viewsModule.directive('savedCities', function() {
     return {
         restrict: 'E',
         templateUrl: './components/saved-cities/saved-cities-template.html',

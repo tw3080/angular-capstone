@@ -1,3 +1,5 @@
+var viewsModule = require('../../views');
+
 viewsModule.config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/saved-cities', {
         // templateUrl: 'components/saved-cities/saved-cities.html',

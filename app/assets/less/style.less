@@ -1,3 +1,9 @@
+@rain-blue: #A6D0DD;
+@snow-white: #fff;
+@snow-blue: #A6D0DD;
+@sun-orange: #FFC94B;
+@thunder-grey: #CFCFCF;
+
 html {
     height: 100%;
 }
@@ -292,6 +298,64 @@ li a:hover {
 /* Weather conditions, dates, and daily low temperature text */
 .unimportant-text {
     color: #fff;
+}
+
+/* WEATHER CONDITIONS */
+/* These change the color scheme depending on the weather */
+
+/* For rainy weather */
+.rain {
+    body {
+        background-color: @rain-blue;
+    }
+    .main-container {
+        background-color: @rain-blue;
+    }
+    .odd-forecast {
+        background-color: darken(@rain-blue, 5%);
+    }
+}
+
+/* For snowy weather */
+.snow {
+    body {
+        background-color: @snow-white;
+    }
+    .main-container {
+        background-color: @snow-white;
+    }
+    .odd-forecast {
+        background-color: #F5F5F5;
+    }
+    .unimportant-text {
+        color: @snow-blue;
+    }
+}
+
+/* For sunny weather */
+.sun {
+    body {
+        background-color: @sun-orange;
+    }
+    .main-container {
+        background-color: @sun-orange;
+    }
+    .odd-forecast {
+        background-color: darken(@sun-orange, 5%);
+    }
+}
+
+/* For stormy weather */
+.thunder {
+    body {
+        background-color: @thunder-grey;
+    }
+    .main-container {
+        background-color: @thunder-grey;
+    }
+    .odd-forecast {
+        background-color: darken(@thunder-grey, 5%);
+    }
 }
 
 /* RESPONSIVENESS */

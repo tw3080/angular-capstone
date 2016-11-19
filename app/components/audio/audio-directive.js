@@ -1,4 +1,6 @@
-weatherApp.directive('audioControl', function() {
+var viewsModule = require('../../views');
+
+viewsModule.directive('audioControl', function() {
     return {
         restrict: 'E',
         templateUrl: './components/audio/audio.html',
