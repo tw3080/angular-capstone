@@ -1,15 +1,19 @@
 <!-- Search/audio bar -->
-<ng-include src="'nav.html'"></ng-include>
+<ng-include src="'./components/nav/nav.html'"></ng-include>
 <!-- Current weather -->
-<div class="current-weather-container" ng-show="showWeather">
-    <i class="wi wi-wu-{{ currentWeather.data.icon }} current-weather-icon"></i><br />
-    <h1 class="city-name-heading">{{ location.name }}</h1>
-    <span class="unimportant-text">{{ currentWeather.data.weather }}<br /></span>
-    <h1>{{ currentWeather.data.temp_f }}&deg;</h1>
+<div class="current-weather-container clearfix" ng-show="showWeather">
+    <div class="top-left">
+        <i class="wi wi-wu-{{ currentWeather.data.icon }} current-weather-icon"></i><br />
+    </div>
+    <div class="top-right">
+        <h1 class="city-name-heading">{{ location.name }}</h1>
+        <h1>{{ currentWeather.data.temp_f }}&deg;</h1>
+        <span class="unimportant-text">{{ currentWeather.data.weather }}<br /></span>
+    </div>
 </div>
 <!-- 10 day forecast -->
 <div class="ten-day-container">
-    <div class="clearfix" ng-repeat="day in tenDay" ng-class-odd="'odd-forecast'">
+    <div class="lol clearfix" ng-repeat="day in tenDay" ng-class-odd="'odd-forecast'">
         <div class="col-1-3">
             {{ day.date.weekday_short }}<br />
             <span class="unimportant-text">{{ day.date.day }} {{ day.date.monthname_short }}</span>
