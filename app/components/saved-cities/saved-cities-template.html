@@ -1,0 +1,10 @@
+<form name="savedCitiesForm" ng-submit="addCity()" novalidate>
+    <input ng-model="city" placeholder="City name, state" required />
+    <input type="Submit" value="Add"/>
+</form>
+<span ng-show="savedCitiesForm.$submitted && !savedCitiesForm.$valid">Please enter a location</span>
+<div id="saved-cities">
+    <p ng-repeat="city in savedCities track by $index">
+        <span ng-click="submit(city.name)">{{ city.name }}</span> <span ng-click="removeCity($index)"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+    </p>
+</div>
