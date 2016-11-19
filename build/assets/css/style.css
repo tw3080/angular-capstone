@@ -238,6 +238,51 @@ li a:hover {
 .unimportant-text {
   color: #fff;
 }
+/* WEATHER CONDITIONS */
+/* These change the color scheme depending on the weather */
+/* For rainy weather */
+.rain body {
+  background-color: #A6D0DD;
+}
+.rain .main-container {
+  background-color: #A6D0DD;
+}
+.rain .odd-forecast {
+  background-color: #94c6d6;
+}
+/* For snowy weather */
+.snow body {
+  background-color: #fff;
+}
+.snow .main-container {
+  background-color: #fff;
+}
+.snow .odd-forecast {
+  background-color: #F5F5F5;
+}
+.snow .unimportant-text {
+  color: #A6D0DD;
+}
+/* For sunny weather */
+.sun body {
+  background-color: #FFC94B;
+}
+.sun .main-container {
+  background-color: #FFC94B;
+}
+.sun .odd-forecast {
+  background-color: #ffc131;
+}
+/* For stormy weather */
+.thunder body {
+  background-color: #CFCFCF;
+}
+.thunder .main-container {
+  background-color: #CFCFCF;
+}
+.thunder .odd-forecast {
+  background-color: #c2c2c2;
+}
 /* RESPONSIVENESS */
 /* Desktop */
 @media only screen and (min-width: 768px) {
