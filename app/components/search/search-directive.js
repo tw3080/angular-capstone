@@ -1,4 +1,8 @@
-weatherApp.directive('searchForm', function() {
+var viewsModule = require('../../views');
+
+// TODO: Might have to change 'viewsModule' back to 'weatherApp'?
+
+viewsModule.directive('searchForm', function() {
     return {
         restrict: 'E',
         templateUrl: './components/search/search.html',
