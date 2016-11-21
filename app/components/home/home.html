@@ -1,15 +1,20 @@
 <!-- Search/audio bar -->
 <ng-include src="'./components/nav/nav.html'"></ng-include>
 <!-- Current weather -->
-<div class="current-weather-container clearfix" ng-show="showWeather">
+<div class="current-weather-container animate-fade clearfix" ng-show="showWeather">
     <div class="top-left">
         <i class="wi wi-wu-{{ currentWeather.data.icon }} current-weather-icon"></i><br />
     </div>
     <div class="top-right">
-        <h1 class="city-name-heading">{{ location.name }}</h1>
-        <h1>{{ currentWeather.data.temp_f }}&deg;</h1>
-        <span class="unimportant-text">{{ currentWeather.data.weather }}<br /></span>
+        <h1>{{ location.name }}</h1>
+        <h1 class="unimportant-text">{{ currentWeather.data.temp_f }}&deg;</h1>
+        <span>{{ currentWeather.data.weather }}<br /></span>
     </div>
+</div>
+<!-- Loading spinner -->
+<div class="spinner-container animate-fade" ng-show="isLoading">
+    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+    <span class="sr-only">Loading...</span>
 </div>
 <!-- 10 day forecast -->
 <div class="ten-day-container">
