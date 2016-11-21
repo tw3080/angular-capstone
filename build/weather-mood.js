@@ -37736,6 +37736,9 @@
 	.service('weatherAppService', ['geocodeLocation', 'reverseGeocodeLocation', 'getWeatherConditions', 'localStorageService', function(geocodeLocation, reverseGeocodeLocation, getWeatherConditions, localStorageService) {
 	    var weatherAppService = this;
 	
+	    weatherAppService.isLoading = true;
+	    console.log(weatherAppService.isLoading);
+	
 	    weatherAppService.cache = localStorageService; // Local storage variable, for storing searched locations
 	    weatherAppService.weatherSounds = ''; // For setting weather sound file names, based on current weather
 	    weatherAppService.showWeather = false; // Determines whether or not to show weather data (is set to true after user submits a location)
@@ -37748,6 +37751,9 @@
 	        weatherAppService.location.name = response[0].display_location.city; // Updates the value of the location's name
 	        weatherAppService.currentWeather.data = response[0]; // Holds data for current weather
 	        weatherAppService.tenDay.data = response[1]; // Holds data for 10 day forecast
+	
+	        weatherAppService.isLoading = false;
+	        console.log(weatherAppService.isLoading);
 	
 	        // For changing sound files and css based on weather conditions: checks the value of weatherAppService.currentWeather.data.icon and matches it to a sound/css file; indexOf() returns -1 if the values don't match
 	        if (['clear', 'mostlysunny', 'partlycloudy', 'partlysunny', 'sunny', 'unknown'].indexOf(weatherAppService.currentWeather.data.icon) > -1) {
@@ -37774,6 +37780,10 @@
 	        if (navigator.geolocation) {
 	          console.log('Geolocation is supported!');
 	          navigator.geolocation.getCurrentPosition(function(position) {
+	
+	              weatherAppService.isLoading = true;
+	              console.log(weatherAppService.isLoading);
+	
 	              weatherAppService.weatherClass = ''; // For switching css styles based on weather conditions
 	              weatherAppService.showWeather = true; // Show the weather
 	              console.log('Position detected');
@@ -37793,6 +37803,10 @@
 	              })
 	              // Finally, use the new weather data to update the weather conditions
 	              .then(function(response) {
+	
+	                  weatherAppService.isLoading = false;
+	                  console.log(weatherAppService.isLoading);
+	
 	                  weatherAppService.responseWeatherCondition(response);
 	                  callback(response);
 	              });
@@ -37806,6 +37820,9 @@
 	
 	    // Geocodes the address input by the user, then gets the current weather conditions for that address
 	    weatherAppService.submit = function(address, callback) {
+	        weatherAppService.isLoading = true;
+	        console.log(weatherAppService.isLoading);
+	
 	        weatherAppService.weatherClass = ''; // For switching css styles based on weather conditions
 	        weatherAppService.showWeather = true; // Show the weather conditions
 	        weatherAppService.address = address; // Address input by the user is bound to the weatherAppService.address variable
@@ -37850,6 +37867,10 @@
 	}]);
 	
 	viewsModule.controller('CurrentWeatherCtrl', function($scope, $rootScope, weatherAppService, getWeatherConditions) {
+	    $scope.isLoading = weatherAppService.isLoading;
+	    console.log($scope.isLoading);
+	
+	    
 	    /* Get scope variable values from 'weatherAppService' for binding to template */
 	    $scope.showWeather = weatherAppService.showWeather; // Show the weather conditions
 	    // Location
@@ -37864,6 +37885,9 @@
 	
 	    /* When the user searches for a new location, update the scope variables to reflect the change in location/weather */
 	    $scope.updateWeather = function(location) {
+	        $scope.isLoading = weatherAppService.isLoading;
+	        console.log($scope.isLoading);
+	
 	        $scope.showWeather = weatherAppService.showWeather; // Show the weather conditions
 	        // Location
 	        $scope.address = location; // Set the current location to the searched address
@@ -37967,11 +37991,13 @@
 	    $routeProvider.when('/saved-cities', {
 	        // templateUrl: 'components/saved-cities/saved-cities.html',
 	        template: `<ng-include src="'./components/nav/nav.html'"></ng-include>
-	        <h1>Saved Cities</h1>
-	        <p>
-	            Type in a city name and click 'add' to save it for quick access
-	        </p>
-	        <saved-cities submit="submit"></saved-cities>`,
+	        <div class="saved-cities-container">
+	            <h1>Saved Cities</h1>
+	            <p class="unimportant-text">
+	                Save cities for quick viewing
+	            </p>
+	        <saved-cities submit="submit"></saved-cities>
+	        </div>`,
 	        controller: 'SavedCitiesCtrl',
 	        controllerAs: 'savedCities'
 	    });
@@ -38003,9 +38029,6 @@
 	        // Audio/css
 	        $scope.audioFile = weatherAppService.weatherSounds;
 	        $rootScope.weatherClass = weatherAppService.weatherClass;
-	        // console.log('Show weather after submit: ', $scope.showWeather);
-	        console.log('audioFile after submit:', $scope.audioFile);
-	        console.log('weatherClass after submit: ', $rootScope.weatherClass);
 	    };
 	
 	    // TODO: Comment this out if there are issues
@@ -38017,8 +38040,6 @@
 	    $scope.submit = function(address) {
 	        weatherAppService.submit(address, $scope.weatherCallback);
 	        $scope.showWeather = true;
-	        console.log('Show weather after submit: ', $scope.showWeather);
-	        // console.log('weatherClass after submit: ' + $rootScope.weatherClass);
 	    };
 	});
 
@@ -38037,10 +38058,14 @@
 	            submit: '=submit'
 	        },
 	        link: function(scope, element, attrs) {
-	            // TODO: Feel like I'm repeating myself too much by having to call getCityList 3 times?
+	            scope.city = '';
+	            scope.formInvalid = false; // If set to true, an error message asking the user to enter a location will display
+	            scope.duplicateCity = false;
 	
-	            // Gets the list of saved cities
+	            /* Gets the list of saved cities */
 	            scope.getCityList = function() {
+	                scope.duplicateCity = false;
+	
 	                var cityList = [];
 	                var data = localStorage.getItem('city');
 	
@@ -38050,87 +38075,48 @@
 	                return cityList;
 	            };
 	
-	            // Add a city to the saved cities list (which is stored in localstorage)
+	            scope.savedCities = scope.getCityList(); // Get the list of cities on page load
+	
+	            /* Add a city to the saved cities list (which is stored in localstorage) */
 	            scope.addCity = function() {
 	                var city = scope.city; // scope.city is bound to the city input field
 	                var cityList = scope.getCityList(); // Get the list of cities
 	
+	                if (cityList)
+	
 	                for (var i = 0; i < cityList.length; i++) {
-	                    // If the city has already been added, don't add it again, and notify the user
-	                    if (cityList[i].name == city) {
-	                        // TODO: Display error message here
-	                        console.log('duplicate city');
+	                    /* If the city has already been added, don't add it again, and notify the user */
+	                    console.log(city);
+	                    if (cityList[i].name.toUpperCase() == city.toUpperCase()) { // Needs to be case insensitive
+	                        scope.duplicateCity = true;
+	                        scope.city = '';
 	                        return;
 	                    }
 	                }
 	
-	                // Otherwise, if the city hasn't been added, add it to the list
-	                cityList.push({
-	                    name: city
-	                });
-	                localStorage.setItem('city', JSON.stringify(cityList));
-	                console.log(cityList);
-	                // scope.$apply();
-	                scope.savedCities = scope.getCityList(); // Update the list of cities
-	                scope.city = ''; // Clear city input field
+	                /* Otherwise, if the form is valid and if the city hasn't been added, add the city to the list */
+	                if (scope.savedCitiesForm.$valid) {
+	                    cityList.push({ // Add the city to the cityList array
+	                        name: city
+	                    });
+	                    localStorage.setItem('city', JSON.stringify(cityList)); // Add the city to local storage
+	                    scope.savedCities = scope.getCityList(); // Update and store the list of cities
+	                    scope.city = ''; // Clear city input field
+	                    scope.formInvalid = false; // Don't display the error message
+	                    /* Else if the form is invalid and the length of the city list hasn't changed, show the error message */
+	                } else if (!scope.savedCitiesForm.$valid && (cityList.length == scope.savedCities.length)) {
+	                    scope.formInvalid = true; // Display the error message
+	                }
 	            };
 	
-	            // Remove a city from the saved cities list
+	            /* Remove a city from the saved cities list */
 	            scope.removeCity = function(city) {
-	                console.log('removing city');
-	                console.log(city);
 	                var cityList = scope.getCityList();
 	
-	                cityList.splice(city, 1);
-	                localStorage.setItem('city', JSON.stringify(cityList));
-	                console.log(cityList);
-	                scope.savedCities = scope.getCityList(); // Update the list of cities
-	                /*
-	                for (var i = 0; i < cityList.length; i++) {
-	                    if (cityList[i] == city) {
-	                        cityList.splice(i, 1);
-	                        localStorage.setItem('city', JSON.stringify(cityList));
-	                    }
-	                }
-	                */
+	                cityList.splice(city, 1); // Remove the city from the cityList array
+	                localStorage.setItem('city', JSON.stringify(cityList)); // Remove the city from local storage
+	                scope.savedCities = scope.getCityList(); // Update and store the list of cities
 	            };
-	
-	            scope.savedCities = scope.getCityList(); // Get the list of cities on page load
-	            console.log(scope.savedCities);
-	
-	            // Add a city to the 'savied cities' list; the list is stored in localstorage
-	            /*
-	            scope.addCity = function() {
-	                console.log('city added');
-	                scope.city = scope.city;
-	
-	                if (localStorage.cities) {
-	                    cities = JSON.parse(localStorage.cities);
-	                } else {
-	                    cities = [];
-	                }
-	
-	                cities.push(scope.city);
-	                localStorage.cities = JSON.stringify(cities);
-	                cities = JSON.parse(localStorage.cities);
-	
-	                console.log(cities);
-	            };
-	            */
-	
-	            // Remove a saved city
-	            /*
-	            scope.deleteCity = function(city) {
-	                cities = JSON.parse(localStorage.cities);
-	
-	                for (var i = 0; i < cities.length; i++) {
-	                    if (cities[i] == city) {
-	                        cities.splice(i, 1);
-	                        localStorage.cities = JSON.stringify(cities);
-	                    }
-	                }
-	            };
-	            */
 	        }
 	    };
 	});

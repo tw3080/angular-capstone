@@ -1,8 +1,9 @@
+/* #BDBDBD */
 html {
   height: 100%;
 }
 body {
-  color: #333;
+  background-color: #CFCFCF;
   font-family: 'Roboto', sans-serif;
   font-weight: bold;
   margin: 0 auto;
@@ -12,6 +13,7 @@ body {
 /* Wrapper for all content in body */
 .main-container {
   margin: 3rem auto 0 auto;
+  text-align: center;
   width: 100%;
 }
 /* Wrapper for centering and giving a max-width to navigation */
@@ -23,7 +25,13 @@ body {
 .current-weather-container,
 .ten-day-container {
   font-size: 1.25rem;
-  margin-top: 2.35rem;
+  margin-top: 3rem;
+  text-align: center;
+}
+.saved-cities-container {
+  font-size: 1.25rem;
+  margin-top: 3rem;
+  padding-top: 3rem;
   text-align: center;
 }
 /* 1/3 width column; used for layout of 10-day forecast */
@@ -74,7 +82,7 @@ body {
 }
 .nav-btn:hover {
   cursor: pointer;
-  background-color: #BDBDBD;
+  background-color: #484848;
 }
 .seventy,
 .thirty {
@@ -89,75 +97,34 @@ body {
 .search-bar {
   width: 100%;
 }
-/*
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    position: fixed;
-    overflow: hidden;
-    background-color: #333;
-    top: 0;
-    width: 100%;
-}
-*/
-/*
-li {
-    float: left;
-    display: block;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-}
-*/
-/*
-THESE MIGHT BE USEFUL IF OTHER LINKS ARE ADDED TO THE NAV
-
-li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 0.5rem;
-    text-decoration: none;
-}
-
-li a:hover {
-    background-color: #111;
-}
-*/
 /* Search text input and search button */
-/*
-.search-bar {
-    width: 88%;
-}
-*/
-/* Search text input */
-/*
 .search-text-input {
-    border: 0;
-    box-sizing: border-box;
-    // float: left;
-    font-size: 1rem;
-    padding: 0.61rem;
-    text-transform: uppercase;
-    width: 87%;
-    &:focus {
-        outline: 1px solid #333;
-        outline-offset: -1px;
-    }
-}
-*/
-.search-text-input {
+  color: #CFCFCF;
+  background-color: #484848;
   border: 0;
   box-sizing: border-box;
   font-size: 1rem;
+  font-weight: bold;
   padding: 0.95rem 1rem 0.95rem 2.8rem;
-  text-transform: uppercase;
   width: 100%;
 }
 .search-text-input:focus {
-  outline: 1px solid #333;
-  outline-offset: -1px;
+  outline: 1px solid #fff;
+}
+.saved-cities-form {
+  position: relative;
+}
+.saved-cities-input {
+  color: #CFCFCF;
+  background-color: #484848;
+  border: 0;
+  box-sizing: border-box;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.95rem 1rem 0.95rem 2.8rem;
+}
+.saved-cities-input:focus {
+  outline: 1px solid #fff;
 }
 /* Search button */
 .search-btn {
@@ -172,58 +139,121 @@ li a:hover {
   outline: 1px solid #fff;
   outline-offset: -1px;
 }
-/* Spacing/sizing of audio icon's parent li element */
 .nav-icon {
+  color: #CFCFCF;
   padding: 1rem;
 }
-/* Audio icon itself */
-/*
-.audio-icon {
-    // padding: 0.7rem;
-    padding: 1rem;
-}
-*/
 .search-container {
   width: 100%;
   vertical-align: middle;
   white-space: nowrap;
   position: relative;
 }
+/* Icons in main search bar and saved cities search bar */
 .search-icon {
   color: #BDBDBD;
+  font-size: 1rem;
   position: absolute;
   margin-left: 1rem;
-  top: 30%;
+  top: 34%;
 }
-.error-msg {
+/* Magnifying glass and plus icons in search bars */
+.magnifying-icon,
+.plus-icon {
+  top: 34%;
+}
+/* All error messages */
+.error-txt {
+  color: #E74343;
+}
+/* Error message styles for main search bar */
+.nav-search-error {
   position: absolute;
   top: 120%;
   margin: 0 auto;
   left: 0;
   right: 0;
-  /*
-    left: 10px;
-    right: 10px;
-    */
 }
-/*
-@keyframes blink {
-    50% { opacity: 0; }
+/* Error message for search bar in saved cities view */
+.saved-cities-error {
+  font-size: 1rem;
+  left: 0;
+  margin: 1rem 0;
+  position: absolute;
+  right: 0;
 }
-*/
-.error-msg.ng-hide-add,
-.error-msg.ng-hide-remove {
+/* Overrides .ng-hide class in order to preserve spacing when hidden */
+.saved-cities-error.ng-hide {
+  display: block !important;
+}
+/* Saved city list links */
+.saved-city-link {
+  margin: 0 1rem;
+}
+.saved-city-link:hover {
+  cursor: pointer;
+}
+.city-list {
+  margin: 3rem auto;
+}
+.spinner-container {
+  bottom: 0;
+  color: #484848;
+  font-size: 1.25rem;
+  height: 4rem;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+/* Slide-up animation; I would like these styles to be more DRY, but for some reason combining them causes the animation to not work, so unfortunately I have to repeat myself */
+.animate-slide.ng-enter {
+  -webkit-transition: 0.25s ease all;
+  -moz-transition: 0.25s ease all;
+  -o-transition: 0.25s ease all;
+  transition: 0.25s ease all;
+  position: relative;
+  display: block;
+  opacity: 0;
+  bottom: -50px;
+  height: 0px;
+}
+.animate-slide.ng-enter-active {
+  opacity: 1;
+  bottom: 0;
+  height: 30px;
+}
+.animate-slide.ng-leave {
+  -webkit-transition: 0.25s ease all;
+  -moz-transition: 0.25s ease all;
+  -o-transition: 0.25s ease all;
+  transition: 0.25s ease all;
+  position: relative;
+  display: block;
+  opacity: 1;
+  bottom: 0;
+  height: 30px;
+}
+.animate-slide.ng-leave-active {
+  margin-top: 50px;
+  opacity: 0;
+  bottom: -50px;
+  height: 0px;
+}
+/* Fade in/out animation */
+.animate-fade.ng-hide-add,
+.animate-fade.ng-hide-remove {
   -webkit-transition: 0.25s ease-in-out all;
   -moz-transition: 0.25s ease-in-out all;
   -o-transition: 0.25s ease-in-out all;
   transition: 0.25s ease-in-out all;
   opacity: 1;
 }
-.error-msg.ng-hide {
+.animate-fade.ng-hide {
   opacity: 0;
 }
 /* TYPOGRAPHY */
-/* City name heading */
 /* Big weather icon for current weather */
 .current-weather-icon {
   font-size: 8rem;
@@ -237,6 +267,31 @@ li a:hover {
 /* Weather conditions, dates, and daily low temperature text */
 .unimportant-text {
   color: #fff;
+}
+/* Fade in/out animation between view changes */
+.animate-view.ng-enter,
+.animate-view.ng-leave {
+  -webkit-transition: 0.25s ease all;
+  -moz-transition: 0.25s ease all;
+  -o-transition: 0.25s ease all;
+  transition: 0.25s ease all;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.animate-view.ng-enter {
+  opacity: 0;
+}
+.animate-view.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+.animate-view.ng-leave {
+  opacity: 1;
+}
+.animate-view.ng-leave.ng-leave-active {
+  opacity: 0;
 }
 /* WEATHER CONDITIONS */
 /* These change the color scheme depending on the weather */
@@ -284,11 +339,10 @@ li a:hover {
   background-color: #c2c2c2;
 }
 /* RESPONSIVENESS */
-/* Desktop */
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 769px) {
   .current-weather-container {
-    height: 50.5rem;
-    width: 64rem;
+    height: 33.1rem;
+    width: 51rem;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -301,17 +355,25 @@ li a:hover {
     position: absolute;
     width: 100%;
   }
+  .saved-cities-container {
+    font-size: 2rem;
+  }
+  .spinner-container {
+    font-size: 2rem;
+    height: 6rem;
+  }
   .top-left {
     float: left;
     width: 50%;
   }
   .top-right {
     float: right;
-    font-size: 3rem;
+    font-size: 2rem;
     width: 50%;
   }
   .current-weather-icon {
-    font-size: 21.5rem;
+    font-size: 14rem;
+    padding-top: 4.3rem;
   }
   .lol {
     float: left;
@@ -321,37 +383,28 @@ li a:hover {
     float: none;
     width: 100%;
   }
-  /* For clearing the .top-left and .top-left floats */
-  /*
-    .clearfix:after {
-        content: "";
-        display: block;
-        clear: both;
-    }
-    */
-  /* For current weather only */
-  /*
-    .current-weather-container {
-        float: left;
-        width: 50%;
-    }
-    */
-  /* For 10 day forecast only */
-  /*
-    .ten-day-container {
-        float: right;
-        width: 50%;
-    }
-    */
 }
 @media only screen and (min-width: 1200px) {
-  /* For current weather and 10 day forecast */
-  .current-weather-container,
-  .ten-day-container {
-    font-size: 2rem;
-  }
   .current-weather-container {
-    height: 39rem;
+    height: 44.4rem;
+    width: 77rem;
+  }
+  .saved-cities-container {
+    font-size: 3rem;
+  }
+  .spinner-container {
+    font-size: 3rem;
+    height: 9rem;
+  }
+  .top-right {
+    font-size: 3rem;
+  }
+  .current-weather-icon {
+    font-size: 21.3rem;
+    padding-top: 6.3rem;
+  }
+  .plus-icon {
+    top: 50%;
   }
 }
 /*# sourceMappingURL=style.css.map */

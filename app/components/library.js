@@ -78,6 +78,9 @@ angular.module('weatherLibrary', [])
 .service('weatherAppService', ['geocodeLocation', 'reverseGeocodeLocation', 'getWeatherConditions', 'localStorageService', function(geocodeLocation, reverseGeocodeLocation, getWeatherConditions, localStorageService) {
     var weatherAppService = this;
 
+    weatherAppService.isLoading = true;
+    console.log(weatherAppService.isLoading);
+
     weatherAppService.cache = localStorageService; // Local storage variable, for storing searched locations
     weatherAppService.weatherSounds = ''; // For setting weather sound file names, based on current weather
     weatherAppService.showWeather = false; // Determines whether or not to show weather data (is set to true after user submits a location)
@@ -90,6 +93,9 @@ angular.module('weatherLibrary', [])
         weatherAppService.location.name = response[0].display_location.city; // Updates the value of the location's name
         weatherAppService.currentWeather.data = response[0]; // Holds data for current weather
         weatherAppService.tenDay.data = response[1]; // Holds data for 10 day forecast
+
+        weatherAppService.isLoading = false;
+        console.log(weatherAppService.isLoading);
 
         // For changing sound files and css based on weather conditions: checks the value of weatherAppService.currentWeather.data.icon and matches it to a sound/css file; indexOf() returns -1 if the values don't match
         if (['clear', 'mostlysunny', 'partlycloudy', 'partlysunny', 'sunny', 'unknown'].indexOf(weatherAppService.currentWeather.data.icon) > -1) {
@@ -116,6 +122,10 @@ angular.module('weatherLibrary', [])
         if (navigator.geolocation) {
           console.log('Geolocation is supported!');
           navigator.geolocation.getCurrentPosition(function(position) {
+
+              weatherAppService.isLoading = true;
+              console.log(weatherAppService.isLoading);
+
               weatherAppService.weatherClass = ''; // For switching css styles based on weather conditions
               weatherAppService.showWeather = true; // Show the weather
               console.log('Position detected');
@@ -135,6 +145,10 @@ angular.module('weatherLibrary', [])
               })
               // Finally, use the new weather data to update the weather conditions
               .then(function(response) {
+
+                  weatherAppService.isLoading = false;
+                  console.log(weatherAppService.isLoading);
+
                   weatherAppService.responseWeatherCondition(response);
                   callback(response);
               });
@@ -148,6 +162,9 @@ angular.module('weatherLibrary', [])
 
     // Geocodes the address input by the user, then gets the current weather conditions for that address
     weatherAppService.submit = function(address, callback) {
+        weatherAppService.isLoading = true;
+        console.log(weatherAppService.isLoading);
+
         weatherAppService.weatherClass = ''; // For switching css styles based on weather conditions
         weatherAppService.showWeather = true; // Show the weather conditions
         weatherAppService.address = address; // Address input by the user is bound to the weatherAppService.address variable

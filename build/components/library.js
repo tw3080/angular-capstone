@@ -19,7 +19,28 @@ angular.module('weatherLibrary', [])
             params: params
         })
         .then(function(response) {
+            console.log('Geocoded location: ', response.data.results[0].geometry.location);
             return response.data.results[0].geometry.location;
+        });
+    };
+}])
+/* Accepts a location (latitude and longitude) as a parameter and returns an actual address for that location; basically, does the opposite of what geocodeLocation() (above) does */
+.factory('reverseGeocodeLocation', ['$http', 'GOOGLE_GEOCODE_PREFIX', 'GOOGLE_API_KEY', function($http, GOOGLE_GEOCODE_PREFIX, GOOGLE_API_KEY) {
+    return function(lat, lng) {
+        var params = {
+            key: GOOGLE_API_KEY,
+            latlng: lat + ',' + lng
+        };
+
+        return $http({
+            method: 'GET',
+            url: GOOGLE_GEOCODE_PREFIX,
+            cache: true,
+            params: params
+        })
+        .then(function(response) {
+            console.log('Reverse geocode results: ', response.data.results[0].formatted_address);
+            return response.data.results[0].formatted_address;
         });
     };
 }])
@@ -53,8 +74,12 @@ angular.module('weatherLibrary', [])
         });
     };
 }])
-.service('weatherAppService', ['geocodeLocation', 'getWeatherConditions', 'localStorageService', function(geocodeLocation, getWeatherConditions, localStorageService) {
+/* Uses the above factories to gather weather data and combine it for use across controllers/directives */
+.service('weatherAppService', ['geocodeLocation', 'reverseGeocodeLocation', 'getWeatherConditions', 'localStorageService', function(geocodeLocation, reverseGeocodeLocation, getWeatherConditions, localStorageService) {
     var weatherAppService = this;
+
+    weatherAppService.isLoading = true;
+    console.log(weatherAppService.isLoading);
 
     weatherAppService.cache = localStorageService; // Local storage variable, for storing searched locations
     weatherAppService.weatherSounds = ''; // For setting weather sound file names, based on current weather
@@ -65,66 +90,83 @@ angular.module('weatherLibrary', [])
 
     weatherAppService.responseWeatherCondition = function(response) {
         weatherAppService.cache.set('data', JSON.stringify(response)); // Store the response in local storage, to limit the number of HTTP requests
-
         weatherAppService.location.name = response[0].display_location.city; // Updates the value of the location's name
         weatherAppService.currentWeather.data = response[0]; // Holds data for current weather
         weatherAppService.tenDay.data = response[1]; // Holds data for 10 day forecast
 
+        weatherAppService.isLoading = false;
+        console.log(weatherAppService.isLoading);
+
         // For changing sound files and css based on weather conditions: checks the value of weatherAppService.currentWeather.data.icon and matches it to a sound/css file; indexOf() returns -1 if the values don't match
         if (['clear', 'mostlysunny', 'partlycloudy', 'partlysunny', 'sunny', 'unknown'].indexOf(weatherAppService.currentWeather.data.icon) > -1) {
-            console.log('Weather icon: ' + weatherAppService.currentWeather.data.icon);
             weatherAppService.weatherSounds = 'sunnysounds';
-            console.log('Weather sounds: ' + weatherAppService.weatherSounds);
             weatherAppService.weatherClass = 'sun';
         } else if (['cloudy', 'hazy', 'mostlycloudy', 'sleat'].indexOf(weatherAppService.currentWeather.data.icon) > -1) {
-            console.log('Weather icon: ' + weatherAppService.currentWeather.data.icon);
             weatherAppService.weatherSounds = 'cloudysounds';
-            console.log('Weather sounds: ' + weatherAppService.weatherSounds);
             weatherAppService.weatherClass = 'thunder';
         } else if (['chancerain', 'chancesleat', 'rain', 'sleat'].indexOf(weatherAppService.currentWeather.data.icon) > -1) {
-            console.log('Weather icon: ' + weatherAppService.currentWeather.data.icon);
             weatherAppService.weatherSounds = 'rainsounds';
-            console.log('Weather sounds: ' + weatherAppService.weatherSounds);
             weatherAppService.weatherClass = 'rain';
         } else if (['chancetstorms', 'tstorms'].indexOf(weatherAppService.currentWeather.data.icon) > -1) {
-            console.log('Weather icon: ' + weatherAppService.currentWeather.data.icon);
             weatherAppService.weatherSounds = 'thundersounds';
-            console.log('Weather sounds: ' + weatherAppService.weatherSounds);
             weatherAppService.weatherClass = 'thunder';
         } else if (['chanceflurries', 'chancesnow', 'flurries', 'snow'].indexOf(weatherAppService.currentWeather.data.icon) > -1) {
-            console.log('Weather icon: ' + weatherAppService.currentWeather.data.icon);
             weatherAppService.weatherSounds = 'snowsounds';
-            console.log('Weather sounds: ' + weatherAppService.weatherSounds);
             weatherAppService.weatherClass = 'snow';
         }
     };
 
-    // check for Geolocation support
+    // Get the user's geolocation
     weatherAppService.initializeGeolocation = function(callback) {
+        // If geolocation is supported, get the user's geolocation
         if (navigator.geolocation) {
           console.log('Geolocation is supported!');
           navigator.geolocation.getCurrentPosition(function(position) {
-              console.log('position detected');
+
+              weatherAppService.isLoading = true;
+              console.log(weatherAppService.isLoading);
 
               weatherAppService.weatherClass = ''; // For switching css styles based on weather conditions
-              weatherAppService.showWeather = true;
-              console.log('show weather: ' + weatherAppService.showWeather);
+              weatherAppService.showWeather = true; // Show the weather
+              console.log('Position detected');
 
-              getWeatherConditions(position.coords.latitude, position.coords.longitude).then(function(response) {
+              /* Location detection can be unreliable or return inaccurate results, so if the location is being detected, the lat/lng need to be reverse geocoded into an address, then that address needs to be regular geocoded and passed to 'getWeatherConditions', because the Weather Underground API sometimes has issues returning correct results without the help of the Google geocoding API */
+              // Reverse geocode the detected location
+              reverseGeocodeLocation(position.coords.latitude, position.coords.longitude)
+              // Then, the address needs to be regular geocoded back into lat/lng
+              .then(function(response) {
+                  return geocodeLocation(response);
+              })
+              // Then, the new lat/lng need to be passed as parameters to 'getWeatherConditions' in order to return the correct data about that location
+              .then(function(response) {
+                  weatherAppService.lat = response.lat;
+                  weatherAppService.lng = response.lng;
+                  return getWeatherConditions(weatherAppService.lat, weatherAppService.lng);
+              })
+              // Finally, use the new weather data to update the weather conditions
+              .then(function(response) {
+
+                  weatherAppService.isLoading = false;
+                  console.log(weatherAppService.isLoading);
+
                   weatherAppService.responseWeatherCondition(response);
                   callback(response);
               });
           });
         }
+        // If geolocation isn't supported, alert the user
         else {
-          console.log('Geolocation is not supported for this Browser/OS version yet.');
+            alert('Geolocation is not supported for this browser/OS version yet; please manually search for a location.');
         }
     };
 
     // Geocodes the address input by the user, then gets the current weather conditions for that address
     weatherAppService.submit = function(address, callback) {
+        weatherAppService.isLoading = true;
+        console.log(weatherAppService.isLoading);
+
         weatherAppService.weatherClass = ''; // For switching css styles based on weather conditions
-        weatherAppService.showWeather = true;
+        weatherAppService.showWeather = true; // Show the weather conditions
         weatherAppService.address = address; // Address input by the user is bound to the weatherAppService.address variable
 
         // Geocodes the address
@@ -147,7 +189,6 @@ angular.module('weatherLibrary', [])
             return data;
         }).then(function(response) {
             weatherAppService.responseWeatherCondition(response);
-
             callback(response);
         });
     };
