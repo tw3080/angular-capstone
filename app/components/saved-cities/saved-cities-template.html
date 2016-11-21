@@ -1,10 +1,15 @@
-<form name="savedCitiesForm" ng-submit="addCity()" novalidate>
-    <input ng-model="city" placeholder="City name, state" required />
-    <input type="Submit" value="Add"/>
+<form class="saved-cities-form" name="savedCitiesForm" ng-submit="addCity()" novalidate>
+    <span class="search-icon plus-icon"><i class="fa fa-plus" aria-hidden="true"></i></span>
+    <input class="saved-cities-input" ng-model="city" placeholder="enter a location" required />
 </form>
-<span ng-show="savedCitiesForm.$submitted && !savedCitiesForm.$valid">Please enter a location</span>
-<div id="saved-cities">
-    <p ng-repeat="city in savedCities track by $index">
-        <span ng-click="submit(city.name)">{{ city.name }}</span> <span ng-click="removeCity($index)"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+<div class="error-txt saved-cities-error animate-fade" ng-show="savedCitiesForm.$submitted && formInvalid && !duplicateCity">
+    Please enter a location
+</div>
+<div class="error-txt saved-cities-error animate-fade" ng-show="savedCitiesForm.$submitted && duplicateCity">
+    City already saved
+</div>
+<div class="city-list">
+    <p class="animate-slide" ng-repeat="city in savedCities track by $index">
+        <span class="saved-city-link" ng-click="submit(city.name)">{{ city.name }} </span><span class="saved-city-link" ng-click="removeCity($index)"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
     </p>
 </div>
