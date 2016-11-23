@@ -38005,14 +38005,6 @@
 	
 	viewsModule.controller('SavedCitiesCtrl', function($scope, $rootScope, weatherAppService, getWeatherConditions) {
 	    // Set scope variables for binding to template
-	    // Location
-	    /*
-	    $scope.address = weatherAppService.address;
-	    $scope.location = weatherAppService.location;
-	    // Weather forecasts
-	    $scope.currentWeather = weatherAppService.currentWeather;
-	    $scope.tenDay = weatherAppService.tenDay.data;
-	    */
 	    // Audio/css
 	    $scope.audioFile = weatherAppService.weatherSounds;
 	    $rootScope.weatherClass = weatherAppService.weatherClass;
@@ -38030,11 +38022,6 @@
 	        $scope.audioFile = weatherAppService.weatherSounds;
 	        $rootScope.weatherClass = weatherAppService.weatherClass;
 	    };
-	
-	    // TODO: Comment this out if there are issues
-	    /*
-	    weatherAppService.initializeGeolocation($scope.weatherCallback);
-	    */
 	
 	    /* Uses the submit function from weatherAppService to geocode the address input by the user and gets the current weather/10-day forecast */
 	    $scope.submit = function(address) {
