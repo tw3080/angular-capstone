@@ -37867,12 +37867,9 @@
 	}]);
 	
 	viewsModule.controller('CurrentWeatherCtrl', function($scope, $rootScope, weatherAppService, getWeatherConditions) {
-	    $scope.isLoading = weatherAppService.isLoading;
-	    console.log($scope.isLoading);
-	
-	    
 	    /* Get scope variable values from 'weatherAppService' for binding to template */
 	    $scope.showWeather = weatherAppService.showWeather; // Show the weather conditions
+	    $scope.isLoading = weatherAppService.isLoading; // Show loading spinner
 	    // Location
 	    $scope.address = weatherAppService.address;
 	    $scope.location = weatherAppService.location;
@@ -37885,9 +37882,7 @@
 	
 	    /* When the user searches for a new location, update the scope variables to reflect the change in location/weather */
 	    $scope.updateWeather = function(location) {
-	        $scope.isLoading = weatherAppService.isLoading;
-	        console.log($scope.isLoading);
-	
+	        $scope.isLoading = weatherAppService.isLoading; // Stop showing the loading spinner
 	        $scope.showWeather = weatherAppService.showWeather; // Show the weather conditions
 	        // Location
 	        $scope.address = location; // Set the current location to the searched address
@@ -38005,14 +38000,6 @@
 	
 	viewsModule.controller('SavedCitiesCtrl', function($scope, $rootScope, weatherAppService, getWeatherConditions) {
 	    // Set scope variables for binding to template
-	    // Location
-	    /*
-	    $scope.address = weatherAppService.address;
-	    $scope.location = weatherAppService.location;
-	    // Weather forecasts
-	    $scope.currentWeather = weatherAppService.currentWeather;
-	    $scope.tenDay = weatherAppService.tenDay.data;
-	    */
 	    // Audio/css
 	    $scope.audioFile = weatherAppService.weatherSounds;
 	    $rootScope.weatherClass = weatherAppService.weatherClass;
@@ -38030,11 +38017,6 @@
 	        $scope.audioFile = weatherAppService.weatherSounds;
 	        $rootScope.weatherClass = weatherAppService.weatherClass;
 	    };
-	
-	    // TODO: Comment this out if there are issues
-	    /*
-	    weatherAppService.initializeGeolocation($scope.weatherCallback);
-	    */
 	
 	    /* Uses the submit function from weatherAppService to geocode the address input by the user and gets the current weather/10-day forecast */
 	    $scope.submit = function(address) {

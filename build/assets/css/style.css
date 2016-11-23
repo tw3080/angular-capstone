@@ -84,14 +84,14 @@ body {
   cursor: pointer;
   background-color: #484848;
 }
-.seventy,
-.thirty {
+.nav-search-container,
+.nav-controls-container {
   float: left;
 }
-.seventy {
+.nav-search-container {
   width: 70%;
 }
-.thirty {
+.nav-controls-container {
   width: 30%;
 }
 .search-bar {
@@ -125,6 +125,45 @@ body {
 }
 .saved-cities-input:focus {
   outline: 1px solid #fff;
+}
+/* Navigation tooltips */
+.saved-cities-tooltip,
+.audio-tooltip {
+  background-color: #484848;
+  border-radius: 3px;
+  color: white;
+  opacity: 0;
+  padding: 0.5rem;
+  position: absolute;
+  top: 115%;
+  -webkit-transition: 0.25s ease all;
+  -moz-transition: 0.25s ease all;
+  -o-transition: 0.25s ease all;
+  transition: 0.25s ease all;
+}
+.saved-cities-tooltip {
+  margin-left: -1%;
+}
+.audio-tooltip {
+  margin-left: 8.3%;
+  margin-right: 7px;
+}
+.saved-cities-tooltip::after,
+.audio-tooltip::after {
+  border-color: transparent transparent #484848 transparent;
+  border-style: solid;
+  border-width: 5px;
+  bottom: 100%;
+  content: "";
+  left: 50%;
+  margin-left: -5px;
+  position: absolute;
+}
+.saved-cities-link:hover + .saved-cities-tooltip {
+  opacity: 1;
+}
+.audio-btn:hover + .audio-tooltip {
+  opacity: 1;
 }
 /* Search button */
 .search-btn {
@@ -382,6 +421,14 @@ body {
   .col-1-3 {
     float: none;
     width: 100%;
+  }
+}
+@media only screen and (min-width: 953px) {
+  .saved-cities-tooltip {
+    margin-left: 14px;
+  }
+  .audio-tooltip {
+    margin-left: 81px;
   }
 }
 @media only screen and (min-width: 1200px) {

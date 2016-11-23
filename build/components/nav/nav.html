@@ -1,15 +1,13 @@
 <nav class="nav">
     <div class="nav-container">
         <ul class="nav-list">
-            <div class="seventy">
+            <div class="nav-search-container">
                 <li class="nav-item search-bar"><search-form submit="submit"></search-form></li>
             </div>
-            <div class="thirty">
+            <div class="nav-controls-container">
                 <audio-control audio-file="audioFile"></audio-control>
-                <!--
-                <li class="nav-item nav-btn"><audio-control audio-file="audioFile"></audio-control></li>
-            -->
-                <a href="#/saved-cities"><li class="nav-item nav-btn"><i class="fa fa-list-ul nav-icon" aria-hidden="true"></i></li></a>
+                <a class="saved-cities-link" href="#/saved-cities"><li class="nav-item nav-btn"><i class="fa fa-list-ul nav-icon" aria-hidden="true"></i></li></a>
+                <span class="saved-cities-tooltip">Saved Cities</span>
             </div>
         </ul>
     </div>
