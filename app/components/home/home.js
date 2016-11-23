@@ -8,12 +8,9 @@ viewsModule.config(['$routeProvider', function($routeProvider) {
 }]);
 
 viewsModule.controller('CurrentWeatherCtrl', function($scope, $rootScope, weatherAppService, getWeatherConditions) {
-    $scope.isLoading = weatherAppService.isLoading;
-    console.log($scope.isLoading);
-
-    
     /* Get scope variable values from 'weatherAppService' for binding to template */
     $scope.showWeather = weatherAppService.showWeather; // Show the weather conditions
+    $scope.isLoading = weatherAppService.isLoading; // Show loading spinner
     // Location
     $scope.address = weatherAppService.address;
     $scope.location = weatherAppService.location;
@@ -26,9 +23,7 @@ viewsModule.controller('CurrentWeatherCtrl', function($scope, $rootScope, weathe
 
     /* When the user searches for a new location, update the scope variables to reflect the change in location/weather */
     $scope.updateWeather = function(location) {
-        $scope.isLoading = weatherAppService.isLoading;
-        console.log($scope.isLoading);
-
+        $scope.isLoading = weatherAppService.isLoading; // Stop showing the loading spinner
         $scope.showWeather = weatherAppService.showWeather; // Show the weather conditions
         // Location
         $scope.address = location; // Set the current location to the searched address
