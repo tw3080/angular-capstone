@@ -37736,9 +37736,7 @@
 	.service('weatherAppService', ['geocodeLocation', 'reverseGeocodeLocation', 'getWeatherConditions', 'localStorageService', function(geocodeLocation, reverseGeocodeLocation, getWeatherConditions, localStorageService) {
 	    var weatherAppService = this;
 	
-	    weatherAppService.isLoading = true;
-	    console.log(weatherAppService.isLoading);
-	
+	    weatherAppService.isLoading = true; // If true, show a loading spinner
 	    weatherAppService.cache = localStorageService; // Local storage variable, for storing searched locations
 	    weatherAppService.weatherSounds = ''; // For setting weather sound file names, based on current weather
 	    weatherAppService.showWeather = false; // Determines whether or not to show weather data (is set to true after user submits a location)
@@ -37751,9 +37749,7 @@
 	        weatherAppService.location.name = response[0].display_location.city; // Updates the value of the location's name
 	        weatherAppService.currentWeather.data = response[0]; // Holds data for current weather
 	        weatherAppService.tenDay.data = response[1]; // Holds data for 10 day forecast
-	
-	        weatherAppService.isLoading = false;
-	        console.log(weatherAppService.isLoading);
+	        weatherAppService.isLoading = false; // Hide the loading spinner
 	
 	        // For changing sound files and css based on weather conditions: checks the value of weatherAppService.currentWeather.data.icon and matches it to a sound/css file; indexOf() returns -1 if the values don't match
 	        if (['clear', 'mostlysunny', 'partlycloudy', 'partlysunny', 'sunny', 'unknown'].indexOf(weatherAppService.currentWeather.data.icon) > -1) {
@@ -37778,17 +37774,12 @@
 	    weatherAppService.initializeGeolocation = function(callback) {
 	        // If geolocation is supported, get the user's geolocation
 	        if (navigator.geolocation) {
-	          console.log('Geolocation is supported!');
 	          navigator.geolocation.getCurrentPosition(function(position) {
-	
-	              weatherAppService.isLoading = true;
-	              console.log(weatherAppService.isLoading);
-	
+	              weatherAppService.isLoading = true; // Show the loading spinner
 	              weatherAppService.weatherClass = ''; // For switching css styles based on weather conditions
 	              weatherAppService.showWeather = true; // Show the weather
-	              console.log('Position detected');
 	
-	              /* Location detection can be unreliable or return inaccurate results, so if the location is being detected, the lat/lng need to be reverse geocoded into an address, then that address needs to be regular geocoded and passed to 'getWeatherConditions', because the Weather Underground API sometimes has issues returning correct results without the help of the Google geocoding API */
+	              // Location detection can be unreliable or return inaccurate results, so if the location is being detected, the lat/lng need to be reverse geocoded into an address, then that address needs to be regular geocoded and passed to 'getWeatherConditions', because the Weather Underground API sometimes has issues returning correct results without the help of the Google geocoding API
 	              // Reverse geocode the detected location
 	              reverseGeocodeLocation(position.coords.latitude, position.coords.longitude)
 	              // Then, the address needs to be regular geocoded back into lat/lng
@@ -37803,10 +37794,7 @@
 	              })
 	              // Finally, use the new weather data to update the weather conditions
 	              .then(function(response) {
-	
-	                  weatherAppService.isLoading = false;
-	                  console.log(weatherAppService.isLoading);
-	
+	                  weatherAppService.isLoading = false; // Hide the loading spinner
 	                  weatherAppService.responseWeatherCondition(response);
 	                  callback(response);
 	              });
@@ -37820,9 +37808,7 @@
 	
 	    // Geocodes the address input by the user, then gets the current weather conditions for that address
 	    weatherAppService.submit = function(address, callback) {
-	        weatherAppService.isLoading = true;
-	        console.log(weatherAppService.isLoading);
-	
+	        weatherAppService.isLoading = true; // Show the loading spinner
 	        weatherAppService.weatherClass = ''; // For switching css styles based on weather conditions
 	        weatherAppService.showWeather = true; // Show the weather conditions
 	        weatherAppService.address = address; // Address input by the user is bound to the weatherAppService.address variable
@@ -37867,7 +37853,7 @@
 	}]);
 	
 	viewsModule.controller('CurrentWeatherCtrl', function($scope, $rootScope, weatherAppService, getWeatherConditions) {
-	    /* Get scope variable values from 'weatherAppService' for binding to template */
+	    // Get scope variable values from 'weatherAppService' for binding to template
 	    $scope.showWeather = weatherAppService.showWeather; // Show the weather conditions
 	    $scope.isLoading = weatherAppService.isLoading; // Show loading spinner
 	    // Location
@@ -37880,7 +37866,7 @@
 	    $scope.audioFile = weatherAppService.weatherSounds;
 	    $rootScope.weatherClass = weatherAppService.weatherClass;
 	
-	    /* When the user searches for a new location, update the scope variables to reflect the change in location/weather */
+	    // When the user searches for a new location, update the scope variables to reflect the change in location/weather
 	    $scope.updateWeather = function(location) {
 	        $scope.isLoading = weatherAppService.isLoading; // Stop showing the loading spinner
 	        $scope.showWeather = weatherAppService.showWeather; // Show the weather conditions
@@ -37895,12 +37881,12 @@
 	        $rootScope.weatherClass = weatherAppService.weatherClass;
 	    };
 	
-	    /* Only get the user's geolocation if an address/location has not already been defined (basically, this means the location will only be detected when the app initially loads; this prevents the location detection from overriding the locations the user searches for) */
+	    // Only get the user's geolocation if an address/location has not already been defined (basically, this means the location will only be detected when the app initially loads; this prevents the location detection from overriding the locations the user searches for)
 	    if (typeof weatherAppService.address === 'undefined') {
 	        weatherAppService.initializeGeolocation($scope.updateWeather);
 	    }
 	
-	    /* Uses the submit function from 'weatherAppService' to geocode the address input by the user and gets the current weather/10-day forecast */
+	    // Uses the submit function from 'weatherAppService' to geocode the address input by the user and gets the current weather/10-day forecast
 	    $scope.submit = function(address) {
 	        weatherAppService.submit(address, $scope.updateWeather);
 	    };
@@ -37984,7 +37970,6 @@
 	
 	viewsModule.config(['$routeProvider', function($routeProvider) {
 	    $routeProvider.when('/saved-cities', {
-	        // templateUrl: 'components/saved-cities/saved-cities.html',
 	        template: `<ng-include src="'./components/nav/nav.html'"></ng-include>
 	        <div class="saved-cities-container">
 	            <h1>Saved Cities</h1>
@@ -38003,9 +37988,9 @@
 	    // Audio/css
 	    $scope.audioFile = weatherAppService.weatherSounds;
 	    $rootScope.weatherClass = weatherAppService.weatherClass;
+	
 	    $scope.weatherCallback = function(location) {
-	        // TODO: Need to redirect to home here, but current weather conditions aren't showing?
-	        window.location.href = '#/';
+	        window.location.href = '#/'; // Redirect the user to the home route
 	        $scope.showWeather = weatherAppService.showWeather; // Show the weather conditions
 	        // Location
 	        $scope.address = location; // Set the current location to the searched address
@@ -38018,7 +38003,7 @@
 	        $rootScope.weatherClass = weatherAppService.weatherClass;
 	    };
 	
-	    /* Uses the submit function from weatherAppService to geocode the address input by the user and gets the current weather/10-day forecast */
+	    // Uses the submit function from weatherAppService to geocode the address input by the user and gets the current weather/10-day forecast
 	    $scope.submit = function(address) {
 	        weatherAppService.submit(address, $scope.weatherCallback);
 	        $scope.showWeather = true;
@@ -38042,9 +38027,9 @@
 	        link: function(scope, element, attrs) {
 	            scope.city = '';
 	            scope.formInvalid = false; // If set to true, an error message asking the user to enter a location will display
-	            scope.duplicateCity = false;
+	            scope.duplicateCity = false; // If set to true, the city is already saved to the saved cities list
 	
-	            /* Gets the list of saved cities */
+	            // Gets the list of saved cities
 	            scope.getCityList = function() {
 	                scope.duplicateCity = false;
 	
@@ -38059,7 +38044,7 @@
 	
 	            scope.savedCities = scope.getCityList(); // Get the list of cities on page load
 	
-	            /* Add a city to the saved cities list (which is stored in localstorage) */
+	            // Add a city to the saved cities list (which is stored in localstorage)
 	            scope.addCity = function() {
 	                var city = scope.city; // scope.city is bound to the city input field
 	                var cityList = scope.getCityList(); // Get the list of cities
@@ -38067,16 +38052,15 @@
 	                if (cityList)
 	
 	                for (var i = 0; i < cityList.length; i++) {
-	                    /* If the city has already been added, don't add it again, and notify the user */
-	                    console.log(city);
-	                    if (cityList[i].name.toUpperCase() == city.toUpperCase()) { // Needs to be case insensitive
+	                    // If the city has already been added (NOT case sensitive), don't add it again, and notify the user
+	                    if (cityList[i].name.toUpperCase() == city.toUpperCase()) {
 	                        scope.duplicateCity = true;
 	                        scope.city = '';
 	                        return;
 	                    }
 	                }
 	
-	                /* Otherwise, if the form is valid and if the city hasn't been added, add the city to the list */
+	                // Otherwise, if the form is valid and if the city hasn't been added, add the city to the list
 	                if (scope.savedCitiesForm.$valid) {
 	                    cityList.push({ // Add the city to the cityList array
 	                        name: city
@@ -38085,7 +38069,7 @@
 	                    scope.savedCities = scope.getCityList(); // Update and store the list of cities
 	                    scope.city = ''; // Clear city input field
 	                    scope.formInvalid = false; // Don't display the error message
-	                    /* Else if the form is invalid and the length of the city list hasn't changed, show the error message */
+	                    // Else if the form is invalid and the length of the city list hasn't changed, show the error message
 	                } else if (!scope.savedCitiesForm.$valid && (cityList.length == scope.savedCities.length)) {
 	                    scope.formInvalid = true; // Display the error message
 	                }

@@ -10,9 +10,9 @@ viewsModule.directive('savedCities', function() {
         link: function(scope, element, attrs) {
             scope.city = '';
             scope.formInvalid = false; // If set to true, an error message asking the user to enter a location will display
-            scope.duplicateCity = false;
+            scope.duplicateCity = false; // If set to true, the city is already saved to the saved cities list
 
-            /* Gets the list of saved cities */
+            // Gets the list of saved cities
             scope.getCityList = function() {
                 scope.duplicateCity = false;
 
@@ -27,7 +27,7 @@ viewsModule.directive('savedCities', function() {
 
             scope.savedCities = scope.getCityList(); // Get the list of cities on page load
 
-            /* Add a city to the saved cities list (which is stored in localstorage) */
+            // Add a city to the saved cities list (which is stored in localstorage)
             scope.addCity = function() {
                 var city = scope.city; // scope.city is bound to the city input field
                 var cityList = scope.getCityList(); // Get the list of cities
@@ -35,16 +35,15 @@ viewsModule.directive('savedCities', function() {
                 if (cityList)
 
                 for (var i = 0; i < cityList.length; i++) {
-                    /* If the city has already been added, don't add it again, and notify the user */
-                    console.log(city);
-                    if (cityList[i].name.toUpperCase() == city.toUpperCase()) { // Needs to be case insensitive
+                    // If the city has already been added (NOT case sensitive), don't add it again, and notify the user
+                    if (cityList[i].name.toUpperCase() == city.toUpperCase()) {
                         scope.duplicateCity = true;
                         scope.city = '';
                         return;
                     }
                 }
 
-                /* Otherwise, if the form is valid and if the city hasn't been added, add the city to the list */
+                // Otherwise, if the form is valid and if the city hasn't been added, add the city to the list
                 if (scope.savedCitiesForm.$valid) {
                     cityList.push({ // Add the city to the cityList array
                         name: city
@@ -53,7 +52,7 @@ viewsModule.directive('savedCities', function() {
                     scope.savedCities = scope.getCityList(); // Update and store the list of cities
                     scope.city = ''; // Clear city input field
                     scope.formInvalid = false; // Don't display the error message
-                    /* Else if the form is invalid and the length of the city list hasn't changed, show the error message */
+                    // Else if the form is invalid and the length of the city list hasn't changed, show the error message
                 } else if (!scope.savedCitiesForm.$valid && (cityList.length == scope.savedCities.length)) {
                     scope.formInvalid = true; // Display the error message
                 }

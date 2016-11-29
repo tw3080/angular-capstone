@@ -8,7 +8,7 @@ viewsModule.config(['$routeProvider', function($routeProvider) {
 }]);
 
 viewsModule.controller('CurrentWeatherCtrl', function($scope, $rootScope, weatherAppService, getWeatherConditions) {
-    /* Get scope variable values from 'weatherAppService' for binding to template */
+    // Get scope variable values from 'weatherAppService' for binding to template
     $scope.showWeather = weatherAppService.showWeather; // Show the weather conditions
     $scope.isLoading = weatherAppService.isLoading; // Show loading spinner
     // Location
@@ -21,7 +21,7 @@ viewsModule.controller('CurrentWeatherCtrl', function($scope, $rootScope, weathe
     $scope.audioFile = weatherAppService.weatherSounds;
     $rootScope.weatherClass = weatherAppService.weatherClass;
 
-    /* When the user searches for a new location, update the scope variables to reflect the change in location/weather */
+    // When the user searches for a new location, update the scope variables to reflect the change in location/weather
     $scope.updateWeather = function(location) {
         $scope.isLoading = weatherAppService.isLoading; // Stop showing the loading spinner
         $scope.showWeather = weatherAppService.showWeather; // Show the weather conditions
@@ -36,12 +36,12 @@ viewsModule.controller('CurrentWeatherCtrl', function($scope, $rootScope, weathe
         $rootScope.weatherClass = weatherAppService.weatherClass;
     };
 
-    /* Only get the user's geolocation if an address/location has not already been defined (basically, this means the location will only be detected when the app initially loads; this prevents the location detection from overriding the locations the user searches for) */
+    // Only get the user's geolocation if an address/location has not already been defined (basically, this means the location will only be detected when the app initially loads; this prevents the location detection from overriding the locations the user searches for)
     if (typeof weatherAppService.address === 'undefined') {
         weatherAppService.initializeGeolocation($scope.updateWeather);
     }
 
-    /* Uses the submit function from 'weatherAppService' to geocode the address input by the user and gets the current weather/10-day forecast */
+    // Uses the submit function from 'weatherAppService' to geocode the address input by the user and gets the current weather/10-day forecast
     $scope.submit = function(address) {
         weatherAppService.submit(address, $scope.updateWeather);
     };
