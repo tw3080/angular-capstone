@@ -1,7 +1,11 @@
+<!-- Navigation search bar -->
 <div class="search-container">
+    <!-- Location search form -->
     <form name="locationSearchForm" ng-submit="submit(address)" novalidate>
         <span class="search-icon magnifying-icon"><i class="fa fa-search" aria-hidden="true"></i></span>
+        <!-- Location search input field -->
         <input type="text" class="search-text-input" ng-model="address" placeholder="enter a location" required />
     </form>
 </div>
+<!-- If the user leaves the search field empty, display this error message -->
 <span class="error-txt nav-search-error animate-fade" ng-show="locationSearchForm.$submitted && !locationSearchForm.$valid">Please enter a location</span>

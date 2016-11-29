@@ -1,13 +1,18 @@
+<!-- Saved cities form -->
 <form class="saved-cities-form" name="savedCitiesForm" ng-submit="addCity()" novalidate>
     <span class="search-icon plus-icon"><i class="fa fa-plus" aria-hidden="true"></i></span>
+    <!-- City input field -->
     <input class="saved-cities-input" ng-model="city" placeholder="enter a location" required />
 </form>
+<!-- If the user leaves the city input field empty, display this error message -->
 <div class="error-txt saved-cities-error animate-fade" ng-show="savedCitiesForm.$submitted && formInvalid && !duplicateCity">
     Please enter a location
 </div>
+<!-- If the user has already added the city to their list, display this error message -->
 <div class="error-txt saved-cities-error animate-fade" ng-show="savedCitiesForm.$submitted && duplicateCity">
     City already saved
 </div>
+<!-- List of saved cities -->
 <div class="city-list">
     <p class="animate-slide" ng-repeat="city in savedCities track by $index">
         <span class="saved-city-link" ng-click="submit(city.name)">{{ city.name }} </span><span class="saved-city-link" ng-click="removeCity($index)"><i class="fa fa-trash-o" aria-hidden="true"></i></span>

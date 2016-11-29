@@ -1,5 +1,8 @@
+<!-- Audio icon -->
 <li class="nav-item nav-btn audio-btn" ng-click="toggleAudio()"><i class="fa nav-icon" aria-hidden="true" ng-class="paused ? 'fa-volume-off' : 'fa-volume-up'"></i></li>
+<!-- 'Toggle audio' tooltip message -->
 <span class="audio-tooltip">Toggle Audio</span>
+<!-- Audio element which changes sources based on weather conditions -->
 <audio id="weather-audio" ng-if="audioFile" autoplay loop>
     <source ng-src="{{ audioOgg }}" type="audio/mpeg"/>
     <source ng-src="{{ audioMp3 }}" type="audio/mpeg"/>
