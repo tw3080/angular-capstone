@@ -42,6 +42,7 @@ The saved cities screen allows users to save locations for quick viewing. Locati
 * Webpack
 * NPM
 * [Weather Underground API](https://www.wunderground.com/weather/api/)
+* Google Maps Geocoding and Reverse Geocoding APIs
 * [Weather Icons](https://erikflowers.github.io/weather-icons/)
 * Normalize.css
 * Font Awesome
